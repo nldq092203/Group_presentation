@@ -1,0 +1,26 @@
+<ul class="nav">
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'home' %}">Our Team</a>
+    </li>
+    {% if user.is_authenticated%}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile' %}?username={{ user.username }}" data-username="{{ user.username}}">My information</a>
+    </li>
+    <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+        </li>
+        {% comment %} {% if user.role == 'ADM' %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'my_listing' %}">My Listing</a>
+            </li>
+        {% endif %} {% endcomment %}
+        
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Log In</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+        </li>
+    {% endif %}
+</ul>

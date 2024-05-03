@@ -1,0 +1,13 @@
+{% extends "user/includes/layout.html" %}
+{% load static %}
+{% block body %}
+    <h1>Our Team</h1>
+    {% include "user/includes/banner.html" %}
+    {% include "user/includes/navbar.html" %}
+    <div class="members-list">
+    </div>
+{% endblock %}
+{% block javascript %}
+<script  type="text/javascript" src="{% static 'user/js/register_login.js' %}"></script>
+<script type="text/javascript" src="{% static 'user/js/members_info.js' %}"></script>
+{% endblock %}
