@@ -33,5 +33,5 @@ class MemberSerializer(serializers.ModelSerializer):
     medias = MediaSerializer(many=True, read_only=True)
     class Meta:
         model = Member
-        fields = ['id', 'username', 'name', 'dob', 'avt', 'address', 'student_id', 'skills', 'experiences', 'educations', 'medias']
+        fields = ['id', 'username', 'name', 'dob', 'avt' ,'email', 'address', 'student_id', 'skills', 'experiences', 'educations', 'medias']
 
