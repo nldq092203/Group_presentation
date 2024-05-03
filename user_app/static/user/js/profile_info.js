@@ -91,7 +91,7 @@ if (full_member) {
         full_member.innerHTML = content;
         let btn = '';
         if (myself) {
-          if (is_member == "True ") {
+          if (is_member == "True") {
             btn = `<button class="btn-edit">Modify</button>`;
           } else {
             btn = `<button class="btn-join">Join Our Team</button>`;
