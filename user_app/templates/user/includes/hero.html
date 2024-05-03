@@ -1,0 +1,13 @@
+<div class="hero-section">
+    <div class="container1">
+      
+      {% if user.is_authenticated %}
+
+    <h1 class="display-4">Welcome  <b>{{user.username}}</b></h1>
+    {% else%}
+    <h1 class="display-4">Welcome to our team</h1>
+    {% endif %}
+      <p>Get started</p>
+    </div>
+</div>
+

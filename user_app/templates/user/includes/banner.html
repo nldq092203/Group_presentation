@@ -1,0 +1,31 @@
+{% if user.is_authenticated %}
+<div class="logged_in_info">
+    <span>Welcome {{user.username}}</span>
+</div>
+{% else%}
+<div class="banner">
+    <div class="welcome-msg">
+        <p>
+            Description
+        </p>
+        <a href="{% url 'register'%}" class="btn">Register now!</a>
+    </div>
+    
+    <h2>Login</h2>
+
+    <div class="login-div">
+        <div style="container" class="error">
+        </div>
+        <form class = "form-login" method="post">
+            {% csrf_token %}
+            <div class="form-user">
+                <input type="text" name="username" value="" placeholder="Username">
+            </div>
+            <div class="form-user">
+                <input type="password" name="password" placeholder="Password">
+            </div>
+            <button class="btn btn-login" type="submit" name="login-btn">Sign in</button>
+        </form>
+    </div>
+</div>
+{% endif %}

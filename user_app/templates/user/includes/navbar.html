@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-style">
+    <a class="navbar-brand" href="/"><b>Group 7</b></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        {% comment %} <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li> {% endcomment %}
+      </ul>
+
+
+    {% if user.is_authenticated%}
+    <ul class="nav nav-bar">
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile' %}?username={{ user.username }}" data-username="{{ user.username}}">
+            My information
+        </a>
+    </li>
+    <li class="nav-item">
+            <a class="nav-link btn btn-outline-primary my-2 my-sm-0" href="{% url 'logout' %}">Log Out</a>
+        </li>
+    </ul>
+    {% else %}
+    <ul class="nav nav-bar">
+        <li class="nav-item mr-2">
+            <a class="nav-link btn btn-outline-primary my-2 my-sm-0" href="{% url 'login' %}">Log In</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link btn btn-outline-primary my-2 my-sm-0" href="{% url 'register' %}">Register</a>
+        </li>
+        
+    </ul>
+    {% endif %}
+    </div>
+  </nav>

@@ -1,0 +1,23 @@
+.border-style {
+    border-bottom: 1px dashed #676767;
+}
+
+.hero-section {
+    color: #000;
+    /* background-image: url("https://images.unsplash.com/photo-1438109491414-7198515b166b?q=80&fm=jpg&s=cbdabf7a79c087a0b060670a6d79726c");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh; */
+    background-color: azure;
+    /* min-height: 350px; */
+    width: 100%;
+    padding: .5rem 1rem;
+  }
+
+  .register-section{
+    margin: 10px auto;
+  }
+  .form-user, .input-login{
+    margin-bottom: 10px;
+  }

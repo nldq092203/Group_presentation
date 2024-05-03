@@ -1,0 +1,166 @@
+from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView, CreateAPIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth import authenticate, login
+from django.db import IntegrityError
+from .models import Member, User, Skill, Experience, Education, Media
+from .serializers import UserSerializer, MemberSerializer
+import json
+from django.shortcuts import get_object_or_404
+from datetime import datetime
+
+
+class LoginAPIView(APIView):
+    def post(self, request, format=None):
+        data = request.data
+        if 'username' in data and 'password' in data:
+            username = data["username"]
+            password = data["password"]
+
+            if not username or not password:
+                return Response({"status": "failure", "message": "Username and password fields cannot be empty."}, status=status.HTTP_400_BAD_REQUEST)
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return Response({"status": "success"})
+            else:
+                return Response({"status": "failure", "message": "Invalid username and/or password."}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"status": "failure", "message": "Username and password fields are required."}, status=status.HTTP_400_BAD_REQUEST)
+
+class RegisterAPIView(APIView):
+    def post(self, request, format=None):
+        data = request.data
+        username = data.get("username")
+        email = data.get("email")
+        password = data.get("password")
+        confirmation = data.get("confirmation")
+
+        if not username or not email or not password or not confirmation:
+            return Response({"status": "failure", "message": "Username, email, and password are required."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if password != confirmation:
+            return Response({"status": "failure", "message": "Passwords must match."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = User.objects.create_user(username, email, password)
+            user.save()
+            return Response({"status": "success"})
+        except IntegrityError:
+            return Response({"status": "failure", "message": "User already exists."}, status=status.HTTP_400_BAD_REQUEST)
+        
+class MemberListAPIView(ListAPIView):
+    queryset = Member.objects.filter(is_member=True)
+    serializer_class = MemberSerializer
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({'serializer': serializer.data})
+    
+class MemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
+    serializer_class = MemberSerializer
+
+    def get_object(self):
+        username = self.request.query_params.get('username', None)
+        if username is not None:
+            return get_object_or_404(Member, username=username)
+        return None
+    
+    def put(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def post(self, request, format=None):
+        data = request.data
+        name = data.get("name")
+        dob = data.get("dob")
+        email = data.get("email")
+        student_id = data.get("id")
+        address = data.get("address")
+        avt = data.get("avt")
+        skills_data = data.get("skills")
+        experiences_data = data.get("experiences")
+        educations_data = data.get("educations")
+        medias_data = data.get("medias")
+
+        if not name or not dob or not email or not student_id or not address:
+            return Response({"status": "failure", "message": "Name, dob, email, student_id, and address fields are required."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Get the current user
+        user = User.objects.get(username=request.user.username)
+
+        # Create a new Member object that points to the same user
+        member = Member(user_ptr=user)
+        member.__dict__.update(user.__dict__)
+
+        # Parse the dob string into a date object
+        try:
+            dob = datetime.strptime(dob, "%Y-%m-%d").date()
+        except ValueError:
+            return Response({"status": "failure", "message": "dob must be in YYYY-MM-DD format."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Update the member's fields
+        member.name = name
+        member.dob = dob
+        member.email = email
+        member.student_id = student_id
+        member.avt = avt
+        member.is_requested = True
+
+        member.save()
+
+        # Fetch or create the Skill instances for the given data and set the relationship
+        skills = []
+        for skill_data in skills_data:
+            skill, created = Skill.objects.get_or_create(member = member, **skill_data)
+            skills.append(skill)
+        member.skills.set(skills)
+
+        # Fetch or create the Experience instances for the given data and set the relationship
+        experiences = []
+        for experience_data in experiences_data:
+            experience, created = Experience.objects.get_or_create(member=member, **experience_data)
+            experiences.append(experience)
+        member.experiences.set(experiences)
+
+        # Fetch or create the Education instances for the given data and set the relationship
+        date_fields = ['start_date', 'end_date']  # The names of the date fields in the Education model
+
+        educations = []
+        for education_data in educations_data:
+            if education_data is None:
+                continue
+            # Parse the date strings in education_data into date objects
+            for key, value in education_data.items():
+                if key in date_fields and isinstance(value, str):
+                    try:
+                        # Parse the date string into a date object
+                        value = datetime.strptime(value, "%Y-%m-%d").date()
+                    except ValueError:
+                        value = None
+                    education_data[key] = value
+            
+            if None not in education_data.values():
+                education, created = Education.objects.get_or_create(member=member, **education_data)
+                educations.append(education)
+        member.educations.set(educations)
+
+        # Fetch or create the Media instances for the given data and set the relationship
+        medias = []
+        for media_data in medias_data:
+            media, created = Media.objects.get_or_create(member = member, **media_data)
+            medias.append(media)
+        member.medias.set(medias)
+
+        
+
+        return Response({"status": "success"})
+        

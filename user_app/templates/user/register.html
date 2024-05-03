@@ -1,0 +1,35 @@
+{% extends "user/includes/layout.html" %}
+{% load static %}
+{% block body %}
+    <div class="container register-section">
+
+        <h2>Register</h2>
+    
+        <div class="register-div">
+            <div style="container" class="error">
+            </div>
+    
+            <form class="form-register" method="post">
+                {% csrf_token %}
+                <div class="form-user">
+                    <input class="form-control" autofocus type="text" name="username" placeholder="Username">
+                </div>
+                <div class="form-user">
+                    <input class="form-control" type="email" name="email" placeholder="Email Address">
+                </div>
+                <div class="form-user">
+                    <input class="form-control" type="password" name="password" placeholder="Password">
+                </div>
+                <div class="form-user">
+                    <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+                </div>
+                <input class="btn btn-primary" type="submit" value="Register">
+            </form>
+        </div>
+        Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+    </div>
+
+{% endblock %}
+{% block javascript %}
+<script  type="text/javascript" src="{% static 'user/js/register_login.js' %}"></script>
+{% endblock %}

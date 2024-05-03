@@ -1,0 +1,23 @@
+{% extends "user/includes/layout.html" %}
+{% load static %}
+{% block body %}
+    <div class="container">
+    <h2>Login</h2>
+
+    <div class="login-div">
+        <div style="container" class="error">
+        </div>
+        <form class="form-login" method="post">
+            {% csrf_token %}
+            <input autofocus class="form-control input-login" type="text" name="username" placeholder="Username">
+            <input class="form-control input-login" type="password" name="password" placeholder="Password">
+            <input class="btn btn-primary input-login" type="submit" value="Login">
+        </form>
+    </div>
+
+    Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+</div>
+{% endblock %}
+{% block javascript %}
+<script  type="text/javascript" src="{% static 'user/js/register_login.js' %}"></script>
+{% endblock %}

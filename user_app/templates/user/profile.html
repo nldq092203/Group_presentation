@@ -1,0 +1,36 @@
+{% extends "user/includes/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container1">
+    <!-- Navbar -->
+    {% include "user/includes/navbar.html" %}
+    <!-- // Navbar -->
+    <div class="container">
+        <!-- Page wrapper -->
+        <div class="member-wrapper">
+            <div style="container" class="error">
+            <!-- full member div -->
+            <div class="full-member-div" data-isMember="{{user.is_member}}" data-username="{{user.username}}" data-isRequested="{{user.is_requested}}">
+            </div>
+            <!-- // full member div -->
+            <div class="edit-info">
+            </div>
+        </div>
+        <!-- // Page wrapper -->
+        <!-- post sidebar -->
+        <div class="post-sidebar">
+            <div class="card">
+                <div class="card-header">
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- // content -->
+</div>
+{% endblock %}
+{% block javascript %}
+<script>
+    let username = "{{ request.user.username }}";
+</script>
+<script type="text/javascript" src="{% static 'user/js/profile_info.js' %}"></script>
+{% endblock %}
