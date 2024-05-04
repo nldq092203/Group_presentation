@@ -33,7 +33,10 @@ if (form_login) {
         .then((data) => {
           // Handle the response data here
           if (data.status == "success") {
-            window.location.href = "/";
+            if (data.user_role == "ADM")
+              window.location.href = "/admin/";
+            else
+              window.location.href = "/";
           } else if (data.status == "failure") {
             console.log(data.message);
             let error = item.parentElement.querySelector(".error");

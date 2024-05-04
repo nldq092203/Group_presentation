@@ -10,6 +10,14 @@ import json
 from django.shortcuts import get_object_or_404
 from datetime import datetime
 
+def user_matches(view_func):
+    def _wrapped_view(view, request, *args, **kwargs):
+        data = request.data
+        member_username = data.get("username")
+        if member_username and request.user.username != member_username:
+                return Response({"status": "error", "message": "You do not have permission to modify this data."}, status=status.HTTP_403_FORBIDDEN)
+        return view_func(view, request, *args, **kwargs)
+    return _wrapped_view
 
 class LoginAPIView(APIView):
     def post(self, request, format=None):
@@ -25,7 +33,10 @@ class LoginAPIView(APIView):
 
             if user is not None:
                 login(request, user)
-                return Response({"status": "success"})
+                if user.role == "ADM":
+                    return Response({"status": "success", "user_role":"ADM"})
+                
+                return Response({"status": "success", "user_role": "USR"})
             else:
                 return Response({"status": "failure", "message": "Invalid username and/or password."}, status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -60,8 +71,9 @@ class MemberListAPIView(ListAPIView):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
         return Response({'serializer': serializer.data})
-    
-class MemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
+
+
+class BaseMemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
     serializer_class = MemberSerializer
 
     def get_object(self):
@@ -70,6 +82,7 @@ class MemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
             return get_object_or_404(Member, username=username)
         return None
     
+    @user_matches
     def put(self, request, format=None):
         data = request.data
         user = User.objects.get(username=request.user.username)
@@ -143,6 +156,8 @@ class MemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
         member.medias.set(medias)
 
         return Response({"status": "success", "member": self.get_serializer(member).data})
+    
+    @user_matches
     def post(self, request, format=None):
         data = request.data
         name = data.get("name")
@@ -229,3 +244,11 @@ class MemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
 
         return Response({"status": "success"})
         
+class MemberDetailAPIView(BaseMemberDetailAPIView):
+    @user_matches
+    def put(self, request, format=None):
+        return super().put(request, format)
+    
+    @user_matches
+    def post(self, request, format=None):
+        return super().post(request, format)

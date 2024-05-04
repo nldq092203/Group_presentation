@@ -118,7 +118,7 @@ if (full_member) {
     full_member.innerHTML = message;
     edit_info.innerHTML = join_btn;
     join_btn = document.querySelector(".btn-join");
-    if(join_btn != '') join_btn.addEventListener("click", join);
+    if(join_btn) join_btn.addEventListener("click", join);
   }
 
   function edit () {
