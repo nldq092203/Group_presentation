@@ -12,12 +12,73 @@
     background-color: azure;
     /* min-height: 350px; */
     width: 100%;
-    padding: .5rem 1rem;
-  }
+    padding: 0.5rem 1rem;
+}
 
-  .register-section{
+.register-section {
     margin: 10px auto;
-  }
-  .form-user, .input-login{
+}
+.form-user,
+.input-login {
     margin-bottom: 10px;
-  }
+}
+
+/* Hùng làm */
+.info-form-post label {
+    display: inline-block;
+    width: 15%;
+    margin-bottom: 20px;
+}
+
+.info-form-post input {
+    overflow: visible;
+    width: 400px;
+    padding: 4px;
+    border: 1px gray solid;
+    border-radius: 8px;
+    opacity: 0.8;
+}
+
+.info-form-post input[type="file"] {
+    border: none;
+}
+
+#add-skill {
+    background-color: #25b1e7;
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+}
+
+.experience {
+    margin-top: 40px;
+    border-top: 1px solid gray;
+    padding-top: 28px;
+}
+
+.experience .row-profile:nth-child(3) {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.row-profile textarea {
+    width: 50%;
+    height: 200px;
+    border-radius: 16px;
+}
+
+.info-form-post .media {
+    display: block !important;
+}
+
+.info-form-post input[type="submit"] {
+    background-color: #25b1e7;
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    width: 120px;
+    margin-bottom: 25px;
+}
