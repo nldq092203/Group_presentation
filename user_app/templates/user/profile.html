@@ -31,6 +31,12 @@
 {% block javascript %}
 <script>
     let username = "{{ request.user.username }}";
+    let is_requested = "False";
+    let is_member = "False";
+    {% if request.member %}
+        is_requested = "{{ request.member.is_requested }}";
+        is_member = "{{ request.member.is_member }}";
+    {% endif %}
 </script>
 <script type="text/javascript" src="{% static 'user/js/profile_info.js' %}"></script>
 {% endblock %}

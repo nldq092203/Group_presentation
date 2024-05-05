@@ -10,6 +10,14 @@ import json
 from django.shortcuts import get_object_or_404
 from datetime import datetime
 
+def user_matches(view_func):
+    def _wrapped_view(view, request, *args, **kwargs):
+        data = request.data
+        member_username = data.get("username")
+        if member_username and request.user.username != member_username:
+                return Response({"status": "error", "message": "You do not have permission to modify this data."}, status=status.HTTP_403_FORBIDDEN)
+        return view_func(view, request, *args, **kwargs)
+    return _wrapped_view
 
 class LoginAPIView(APIView):
     def post(self, request, format=None):
@@ -25,7 +33,10 @@ class LoginAPIView(APIView):
 
             if user is not None:
                 login(request, user)
-                return Response({"status": "success"})
+                if user.role == "ADM":
+                    return Response({"status": "success", "user_role":"ADM"})
+                
+                return Response({"status": "success", "user_role": "USR"})
             else:
                 return Response({"status": "failure", "message": "Invalid username and/or password."}, status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -60,8 +71,9 @@ class MemberListAPIView(ListAPIView):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
         return Response({'serializer': serializer.data})
-    
-class MemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
+
+
+class BaseMemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
     serializer_class = MemberSerializer
 
     def get_object(self):
@@ -70,14 +82,82 @@ class MemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
             return get_object_or_404(Member, username=username)
         return None
     
-    def put(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    @user_matches
+    def put(self, request, format=None):
+        data = request.data
+        user = User.objects.get(username=request.user.username)
+        member = Member.objects.get(username=user.username)
+
+        name = data.get("name", member.name)
+        dob = data.get("dob", member.dob)
+        email = data.get("email", member.email)
+        student_id = data.get("id", member.student_id)
+        address = data.get("address", member.address)
+        avt = data.get("avt", member.avt)
+        skills_data = data.get("skills", [])
+        experiences_data = data.get("experiences", [])
+        educations_data = data.get("educations", [])
+        medias_data = data.get("medias", [])
+
+        if not name or not dob or not email or not student_id or not address:
+            return Response({"status": "failure", "message": "Name, dob, email, student_id, and address fields are required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            dob = datetime.strptime(dob, "%Y-%m-%d").date()
+        except ValueError:
+            return Response({"status": "failure", "message": "dob must be in YYYY-MM-DD format."}, status=status.HTTP_400_BAD_REQUEST)
+
+        member.name = name
+        member.dob = dob
+        member.email = email
+        member.student_id = student_id
+        member.avt = avt
+        member.is_requested = True
+
+        member.save()
+
+        # Update the Skill instances for the given data and set the relationship
+        skills = []
+        for skill_data in skills_data:
+            skill, created = Skill.objects.get_or_create(member=member, **skill_data)
+            skills.append(skill)
+        member.skills.set(skills)
+
+        # Update the Experience instances for the given data and set the relationship
+        experiences = []
+        for experience_data in experiences_data:
+            experience, created = Experience.objects.get_or_create(member=member, **experience_data)
+            experiences.append(experience)
+        member.experiences.set(experiences)
+
+        # Update the Education instances for the given data and set the relationship
+        date_fields = ['start_date', 'end_date']  # The names of the date fields in the Education model
+        educations = []
+        for education_data in educations_data:
+            if education_data is None:
+                continue
+            for key, value in education_data.items():
+                if key in date_fields and isinstance(value, str):
+                    try:
+                        value = datetime.strptime(value, "%Y-%m-%d").date()
+                    except ValueError:
+                        value = None
+                    education_data[key] = value
+            if None not in education_data.values():
+                education, created = Education.objects.get_or_create(member=member, **education_data)
+                educations.append(education)
+        member.educations.set(educations)
+
+        # Update the Media instances for the given data and set the relationship
+        medias = []
+        for media_data in medias_data:
+            media, created = Media.objects.get_or_create(member=member, **media_data)
+            medias.append(media)
+        member.medias.set(medias)
+
+        return Response({"status": "success", "member": self.get_serializer(member).data})
     
+    @user_matches
     def post(self, request, format=None):
         data = request.data
         name = data.get("name")
@@ -164,3 +244,11 @@ class MemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
 
         return Response({"status": "success"})
         
+class MemberDetailAPIView(BaseMemberDetailAPIView):
+    @user_matches
+    def put(self, request, format=None):
+        return super().put(request, format)
+    
+    @user_matches
+    def post(self, request, format=None):
+        return super().post(request, format)
