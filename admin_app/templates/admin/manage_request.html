@@ -1,0 +1,26 @@
+{% extends "admin/includes/layout.html" %}
+{% load static %}
+{% block title %}Admin | Manage Requests{% endblock %}
+{% block body %}
+    {% include "admin/includes/navbar.html" %}
+    <div class="container content">
+		<div class="action">
+
+			<h1 class="page-title">Manage Requests</h1>
+
+		<!-- Display records from DB-->
+        <div style="width: 60%; margin: 0px auto;" class="error">
+        </div>
+		<div class="table-div">
+            <!-- Display notification message -->
+	
+
+		</div>
+		<!-- // Display records from DB -->
+
+	</div>
+
+{% endblock %}
+{% block javascript %}
+<script  type="text/javascript" src="{% static 'admin/js/manage_request.js' %}"></script>
+{% endblock %}

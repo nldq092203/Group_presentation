@@ -1,0 +1,40 @@
+.container.dashboard .stats a {
+	display: inline-block;
+	padding: 30px;
+	margin: 5px;
+	width: 25%;
+	text-align: center;
+	border-radius: 3px;
+	border: 1px solid #BFBCB3;
+}
+.container.dashboard .stats a.first {
+	margin-left: 25px;
+}
+
+.container.dashboard .stats a:hover {
+	cursor: pointer;
+	background-color: #E1E1E1;
+}
+.table-div {
+	float: left;
+	width: 47%;
+}
+
+.table-div table {
+	width: 90%;
+}
+
+.table-div button.fa {
+	color: white;
+	padding: 3px;
+}
+
+.table-div .edit {
+	background: #004220;
+}
+.table-div .delete {
+	background: #F70E1A;
+}
+.table-div .publish {
+	background: green;
+}

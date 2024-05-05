@@ -1,0 +1,62 @@
+{% extends "admin/includes/layout.html" %}
+{% load static %}
+{% block title %}Admin | Manage Members{% endblock %}
+{% block body %}
+    {% include "admin/includes/navbar.html" %}
+    <div class="container content">
+		<div class="action">
+
+			<h1 class="page-title">Manage Members</h1>
+
+			{% comment %} <form method="post" action="<?php echo BASE_URL . 'admin/users.php'; ?>">
+
+				<!-- validation errors for the form -->
+				<?php include(ROOT_PATH . '/includes/public/errors.php') ?>
+
+				<!-- if editing user, the id is required to identify that user -->
+				<?php if ($isEditingUser === true) : ?>
+					<input type="hidden" name="admin_id" value="<?php echo $admin_id; ?>">
+				<?php endif ?>
+
+				<input type="text" name="username" value="<?php echo $username; ?>" placeholder="Username">
+
+				<input type="email" name="email" value="<?php echo $email ?>" placeholder="Email">
+				<input type="password" name="password" placeholder="Password">
+				<input type="password" name="passwordConfirmation" placeholder="Password confirmation">
+
+				<select name="role_id">
+					<option value="" selected disabled>Assign role</option>
+					<?php foreach ($roles as $role) : ?>
+						<option value="<?php echo $role['id']; ?>">
+							<?php echo $role['name']; ?>
+						</option>
+					<?php endforeach ?>
+				</select>
+
+				<!-- if editing user, display the update button instead of create button -->
+				<?php if ($isEditingUser === true) : ?>
+					<button type="submit" class="btn" name="update_admin">UPDATE</button>
+				<?php else : ?>
+					<button type="submit" class="btn" name="create_admin">Save User</button>
+				<?php endif ?>
+
+			</form> {% endcomment %}
+		</div>
+		<!-- // Middle form - to create and edit -->
+
+		<!-- Display records from DB-->
+        <div style="width: 60%; margin: 0px auto;" class="error">
+        </div>
+		<div class="table-div">
+            <!-- Display notification message -->
+	
+
+		</div>
+		<!-- // Display records from DB -->
+
+	</div>
+
+{% endblock %}
+{% block javascript %}
+<script  type="text/javascript" src="{% static 'admin/js/manage_member.js' %}"></script>
+{% endblock %}

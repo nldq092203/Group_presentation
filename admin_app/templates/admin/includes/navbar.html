@@ -1,13 +1,13 @@
 <ul class="nav">
+    {% if user.is_authenticated and user.role == "ADM" %}
     <li class="nav-item">
         <a class="nav-link" href="{% url 'home_admin' %}">Admin Site</a>
     </li>
-    {% if user.is_authenticated%}
     <li class="nav-item">
-        <a class="nav-link" href="{% url 'home' %}">Manage Team's Member</a>
+        <a class="nav-link" href="{% url 'manage_member' %}">Manage Team's Member</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{% url 'profile' %}?username={{ user.username }}">Manage Request</a>
+        <a class="nav-link" href="{% url 'manage_request' %}">Manage Request</a>
     </li>
     <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
@@ -18,7 +18,7 @@
             </li>
         {% endif %} {% endcomment %}
         
-    {% else %}
+    {% elif not user.is_authenticated%}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'login' %}">Log In</a>
         </li>
