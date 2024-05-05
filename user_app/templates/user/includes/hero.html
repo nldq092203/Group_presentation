@@ -3,11 +3,11 @@
       
       {% if user.is_authenticated %}
 
-    <h1 class="display-4">Welcome  <b>{{user.username}}</b></h1>
+    <h1 class="display-4">Hi  <b>{{user.username}}</b></h1>
     {% else%}
     <h1 class="display-4">Welcome to our team</h1>
     {% endif %}
-      <p>Get started</p>
+      {% comment %} <p>Get started</p> {% endcomment %}
     </div>
 </div>
 
