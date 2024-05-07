@@ -9,6 +9,8 @@ from .serializers import UserSerializer, MemberSerializer
 import json
 from django.shortcuts import get_object_or_404
 from datetime import datetime
+from django.utils.decorators import method_decorator
+
 
 def user_matches(view_func):
     def _wrapped_view(view, request, *args, **kwargs):
@@ -82,37 +84,41 @@ class BaseMemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
             return get_object_or_404(Member, username=username)
         return None
     
-    @user_matches
     def put(self, request, format=None):
         data = request.data
-        user = User.objects.get(username=request.user.username)
-        member = Member.objects.get(username=user.username)
+        
+        username = request.GET.get("username", request.user.username)
 
+        member = Member.objects.get(username=username)
+        
         name = data.get("name", member.name)
         dob = data.get("dob", member.dob)
         email = data.get("email", member.email)
         student_id = data.get("id", member.student_id)
         address = data.get("address", member.address)
         avt = data.get("avt", member.avt)
+        is_member = data.get("is_member", member.is_member)
         skills_data = data.get("skills", [])
         experiences_data = data.get("experiences", [])
         educations_data = data.get("educations", [])
         medias_data = data.get("medias", [])
 
-        if not name or not dob or not email or not student_id or not address:
-            return Response({"status": "failure", "message": "Name, dob, email, student_id, and address fields are required."}, status=status.HTTP_400_BAD_REQUEST)
+        # if not name or not dob or not email or not student_id or not address:
+        #     return Response({"status": "failure", "message": "Name, dob, email, student_id, and address fields are required."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            dob = datetime.strptime(dob, "%Y-%m-%d").date()
+            if isinstance(dob, str):
+                dob = datetime.strptime(dob, "%Y-%m-%d").date()
         except ValueError:
             return Response({"status": "failure", "message": "dob must be in YYYY-MM-DD format."}, status=status.HTTP_400_BAD_REQUEST)
-
+        
         member.name = name
         member.dob = dob
         member.email = email
         member.student_id = student_id
         member.avt = avt
         member.is_requested = True
+        member.is_member = is_member
 
         member.save()
 
@@ -157,7 +163,6 @@ class BaseMemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
 
         return Response({"status": "success", "member": self.get_serializer(member).data})
     
-    @user_matches
     def post(self, request, format=None):
         data = request.data
         name = data.get("name")
@@ -175,7 +180,8 @@ class BaseMemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
             return Response({"status": "failure", "message": "Name, dob, email, student_id, and address fields are required."}, status=status.HTTP_400_BAD_REQUEST)
         
         # Get the current user
-        user = User.objects.get(username=request.user.username)
+        username = data.get("username", request.user.username)
+        user = User.objects.get(username=username)
 
         # Create a new Member object that points to the same user
         member = Member(user_ptr=user)
@@ -245,10 +251,10 @@ class BaseMemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
         return Response({"status": "success"})
         
 class MemberDetailAPIView(BaseMemberDetailAPIView):
-    @user_matches
+    # @method_decorator(user_matches)
     def put(self, request, format=None):
         return super().put(request, format)
     
-    @user_matches
+    # @method_decorator(user_matches)
     def post(self, request, format=None):
         return super().post(request, format)

@@ -1,0 +1,20 @@
+{% extends "admin/includes/layout.html" %}
+{% load static %}
+{% block body %}
+    <h1></h1>
+    {% include "admin/includes/navbar.html" %}
+    <div class="container dashboard">
+        <div class="stats">
+            <a href="/admin/manage_member" class="first">
+                <span>{{count_members}}</span> <br>
+                <span>Members</span>
+            </a>
+            <a href="/admin/manage_request">
+                <span>{{count_requests}}</span> <br>
+                <span>Requests</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+{% endblock %}

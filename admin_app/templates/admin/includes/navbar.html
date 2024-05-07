@@ -1,0 +1,29 @@
+<ul class="nav">
+    {% if user.is_authenticated and user.role == "ADM" %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'home_admin' %}">Admin Site</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'manage_member' %}">Manage Team's Member</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'manage_request' %}">Manage Request</a>
+    </li>
+    <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+    </li>
+        {% comment %} {% if user.role == 'ADM' %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'my_listing' %}">My Listing</a>
+            </li>
+        {% endif %} {% endcomment %}
+        
+    {% elif not user.is_authenticated%}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Log In</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+        </li>
+    {% endif %}
+</ul>
