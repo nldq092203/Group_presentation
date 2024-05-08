@@ -11,11 +11,12 @@ if (full_member) {
   console.log(is_member);
   // Get the query parameters from the URL
 
+  console.log(username);
   let myself = full_member.dataset.username == username;
   console.log(myself);
   console.log (full_member.dataset.username);
   if (!myself || is_member == "True") {
-    fetch(`/api/member?username=${username}`, {
+    fetch(`/api/member?username=${full_member.dataset.username}`, {
       method: "GET",
     })
       .then((response) => {
@@ -100,10 +101,10 @@ if (full_member) {
         }
         console.log(btn);
         let btnElement = document.querySelector('.btn-edit') || document.querySelector('.btn-join');
-        if(btnElement.className == "btn-edit"){
+        if(btnElement && btnElement.className == "btn-edit"){
           btnElement.addEventListener("click",edit)
         }
-        else if(btnElement.className == "btn-join"){
+        else if(btnElement && btnElement.className == "btn-join"){
           btnElement.addEventListener("click", join)
         }
       });
