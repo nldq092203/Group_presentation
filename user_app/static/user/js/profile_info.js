@@ -455,7 +455,6 @@ if (full_member) {
         <input type="text" name="skill-level-0" id="skill-level-0" value="">
       </div>
     </div>
-    <button id="add-skill">Add Skill</button>
   `;
         if (document.querySelector("#add-skill"))
             document

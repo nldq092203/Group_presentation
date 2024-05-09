@@ -1,40 +1,40 @@
 .container.dashboard .stats a {
-	display: inline-block;
-	padding: 30px;
-	margin: 5px;
-	width: 25%;
-	text-align: center;
-	border-radius: 3px;
-	border: 1px solid #BFBCB3;
+    display: inline-block;
+    padding: 30px;
+    margin: 5px;
+    width: 25%;
+    text-align: center;
+    border-radius: 3px;
+    border: 1px solid #bfbcb3;
 }
 .container.dashboard .stats a.first {
-	margin-left: 25px;
+    margin-left: 25px;
 }
 
 .container.dashboard .stats a:hover {
-	cursor: pointer;
-	background-color: #E1E1E1;
+    cursor: pointer;
+    background-color: #e1e1e1;
 }
 .table-div {
-	float: left;
-	width: 47%;
+    float: left;
+    width: 100%;
 }
 
 .table-div table {
-	width: 90%;
+    width: 90%;
 }
 
 .table-div button.fa {
-	color: white;
-	padding: 3px;
+    color: white;
+    padding: 3px;
 }
 
 .table-div .edit {
-	background: #004220;
+    background: #004220;
 }
 .table-div .delete {
-	background: #F70E1A;
+    background: #f70e1a;
 }
 .table-div .publish {
-	background: green;
+    background: green;
 }
