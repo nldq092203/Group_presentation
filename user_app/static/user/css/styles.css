@@ -82,3 +82,64 @@
     width: 120px;
     margin-bottom: 25px;
 }
+
+.container-info-detail {
+    display: inline-block;
+}
+
+.container {
+    min-height: 645px;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    opacity: 0.9;
+    font-size: 18px;
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 65%;
+    align-items: center;
+    padding: 24px;
+}
+
+.full-member-div {
+    display: flex;
+    justify-content: center;
+}
+
+.info img {
+    width: 28%;
+    padding: 8px;
+}
+
+.info div span {
+    color: #000;
+    opacity: 0.6;
+}
+
+.info div p {
+    display: inline-block;
+}
+.info div {
+    font-weight: 600 !important;
+    margin-bottom: 12px;
+}
+
+.info-user {
+    margin-left: 20px;
+}
+
+.app-contact {
+    width: 65%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #e79999;
+    color: #fff;
+}
+
+.app-contact i {
+    font-size: 30px;
+    padding: 12px 0;
+}

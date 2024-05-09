@@ -11,11 +11,12 @@ if (full_member) {
     console.log(is_member);
     // Get the query parameters from the URL
 
+    console.log(username);
     let myself = full_member.dataset.username == username;
     console.log(myself);
     console.log(full_member.dataset.username);
     if (!myself || is_member == "True") {
-        fetch(`/api/member?username=${username}`, {
+        fetch(`/api/member?username=${full_member.dataset.username}`, {
             method: "GET",
         })
             .then((response) => {
@@ -25,15 +26,21 @@ if (full_member) {
                 memberData = data;
                 console.log(data);
                 const content = `
-            <h1>${data.name}</h1>
+            
             <div class="info">
-                <img class="avt" src="${data.avt}" alt="${
-                    data.name
-                } Avatar" style="max-height:100px">
-                <div class="dob">${data.dob}</div>
-                <div class="id">${data.student_id}</div>
-                <div class="email">${data.email}</div>
-                <div class="address">${data.address}</div>
+                <img class="avt" src="${data.avt}" alt="${data.name} Avatar" >
+                <div class="info-user">
+                    
+                    <h3>I'm  <p>${data.name}</p></h3>
+                    <div class="dob">Date of Birth: <span>${
+                        data.dob
+                    }</span></div>
+                    <div class="id">Phone: <span>${data.student_id}</span></div>
+                    <div class="email">Email: <span>${data.email}</span></div>
+                    <div class="address">Address: <span>${
+                        data.address
+                    }</span></div>
+                    
                 <ul class="skillList">
                     ${(data.skills || [])
                         .map(
@@ -73,6 +80,7 @@ if (full_member) {
                         )
                         .join("")}
                 </ul>
+                
                 <ul class="mediaList">
                     ${(data.medias || [])
                         .map(
@@ -85,6 +93,8 @@ if (full_member) {
                         )
                         .join("")}
                 </ul>
+                </div>
+             
             </div>
         `;
                 // Insert the content into the full_member div
@@ -102,9 +112,9 @@ if (full_member) {
                 let btnElement =
                     document.querySelector(".btn-edit") ||
                     document.querySelector(".btn-join");
-                if (btnElement.className == "btn-edit") {
+                if (btnElement && btnElement.className == "btn-edit") {
                     btnElement.addEventListener("click", edit);
-                } else if (btnElement.className == "btn-join") {
+                } else if (btnElement && btnElement.className == "btn-join") {
                     btnElement.addEventListener("click", join);
                 }
             });
@@ -439,14 +449,10 @@ if (full_member) {
         skillsHTML = `
     <div id="skills-container">
       <div class="skill">
-      <div class="row-profile">
         <label for="skill-name-0">Skill Name:</label>
         <input type="text" name="skill-name-0" id="skill-name-0" value="">
-      </div>
-      <div class="row-profile">
         <label for="skill-level-0">Skill Level:</label>
         <input type="text" name="skill-level-0" id="skill-level-0" value="">
-      </div>
       </div>
     </div>
     <button id="add-skill">Add Skill</button>
@@ -463,14 +469,10 @@ if (full_member) {
                     // Create a new set of input fields
                     let newSkillHTML = `
         <div class="skill">
-          <div class="row-profile">
-            <label for="skill-name-${skillCount}">Skill Name:</label>
-            <input type="text" name="skill-name-${skillCount}" id="skill-name-${skillCount}" value="">
-          </div>
-          <div class="row-profile">
-            <label for="skill-level-${skillCount}">Skill Level:</label>
-            <input type="text" name="skill-level-${skillCount}" id="skill-level-${skillCount}" value="">
-          </div>
+          <label for="skill-name-${skillCount}">Skill Name:</label>
+          <input type="text" name="skill-name-${skillCount}" id="skill-name-${skillCount}" value="">
+          <label for="skill-level-${skillCount}">Skill Level:</label>
+          <input type="text" name="skill-level-${skillCount}" id="skill-level-${skillCount}" value="">
         </div>
       `;
 
@@ -482,82 +484,52 @@ if (full_member) {
 
         experiencesHTML = `
               <div class="experience">
-                  <div class="row-profile">
-                    <label for="experience-title-0">Title:</label>
-                    <input type="text" name="experience-title-0" id="experience-title-0" value="">
-                  </div>
-                  <div class="row-profile">
-                    <label for="experience-agency-0">Agency:</label>
-                    <input type="text" name="experience-agency-0" id="experience-agency-0 value="">
-                  </div>
-                  <div class="row-profile">
-                    <label for="experience-description-0">Description:</label>
-                    <textarea name="experience-description-0" id="experience-description-0"></textarea>
-                  </div>
+                  <label for="experience-title-0">Title:</label>
+                  <input type="text" name="experience-title-0" id="experience-title-0" value="">
+                  <label for="experience-agency-0">Agency:</label>
+                  <input type="text" name="experience-agency-0" id="experience-agency-0 value="">
+                  <label for="experience-description-0">Description:</label>
+                  <textarea name="experience-description-0" id="experience-description-0"></textarea>
               </div>
               `;
 
         educationsHTML = `
               <div class="education">
-              <div class="row-profile">
                   <label for="education-institution-0">Institution:</label>
                   <input type="text" name="education-institution-0" id="education-institution-0" value="">
-                  </div>
-                  <div class="row-profile">
                   <label for="education-degree-0">Degree:</label>
                   <input type="text" name="education-degree-0" id="education-degree-0" value="">
-                  </div>
-                  <div class="row-profile">
                   <label for="education-start-date-0">Start Date:</label>
                   <input type="date" name="education-start-date-0" id="education-start-date-0" value="">
-                  </div>
-                  <div class="row-profile">
                   <label for="education-end-date-0">End Date:</label>
                   <input type="date" name="education-end-date-0" id="education-end-date-0" value="">
-                  </div>
               </div>
               `;
 
         mediasHTML = `
               <div class="media">
-              <div class="row-profile">
                   <label for="media-name-0">Name:</label>
                   <input type="text" name="media-name-0" id="media-name-0" value="">
-                  </div>
-                  <div class="row-profile">
                   <label for="media-url-0">URL:</label>
                   <input type="text" name="media-url-0" id="media-url-0" value="">
-                  </div>
               </div>
               `;
 
         full_member.innerHTML = `
       <form class="info-form-post" method="post">
           <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-          <div class="row-profile">
-            <label for="name">Name:</label>
-            <input type="text" name="name" value="" required>
-          </div>
-          <div class="row-profile">
-            <label for="avt">Avatar:</label>
-            <input type="file" name="avt" accept="image/*">
-          </div>
-          <div class="row-profile">
-            <label for="dob">Date of Birth:</label>
-            <input type="date" name="dob" value="" required>
-          </div>
-          <div class="row-profile">
-            <label for="id">Student ID:</label>
-            <input type="text" name="id" value="" required>
-          </div>
-          <div class="row-profile">
-            <label for="email">Email:</label>
-            <input type="email" name="email" value="" required>
-          </div>
-          <div class="row-profile">
-            <label for="address">Address:</label>
-            <input type="text" name="address" id="address" value="" required>
-            </div>
+          <label for="name">Name:</label>
+          <input type="text" name="name" value="" required>
+          <label for="avt">Avatar:</label>
+          <input type="file" name="avt" accept="image/*">
+          <label for="dob">Date of Birth:</label>
+          <input type="date" name="dob" value="" required>
+          <label for="id">Student ID:</label>
+          <input type="text" name="id" value="" required>
+          <label for="email">Email:</label>
+          <input type="email" name="email" value="" required>
+          <label for="address">Address:</label>
+          <input type="text" name="address" id="address" value="" required>
           ${skillsHTML}
           ${experiencesHTML}
           ${educationsHTML}
@@ -688,6 +660,3 @@ if (full_member) {
         }
     }
 }
-
-let InputElement = document.querySelectorAll(".info-form-post");
-console.log(InputElement);

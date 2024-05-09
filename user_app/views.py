@@ -19,9 +19,12 @@ def register_view(request):
     return render(request, "user/register.html")
 
 def profile_view(request):
+    username = request.GET.get("username")
     try:
         member = Member.objects.get(username = request.user.username)
         request.member = member
     except Member.DoesNotExist:
         pass
-    return render(request, "user/profile.html")
+    return render(request, "user/profile.html", {
+        "username": username
+    })
