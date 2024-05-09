@@ -1,6 +1,4 @@
-{% extends "user/includes/layout.html" %}
-{% load static %}
-{% block body %}
+{% extends "user/includes/layout.html" %} {% load static %} {% block body %}
 <div class="container1">
     <!-- Navbar -->
     {% include "user/includes/navbar.html" %}
@@ -8,40 +6,42 @@
     <div class="container">
         <!-- Page wrapper -->
         <div class="member-wrapper">
-                <div  style="container" class="error container-info-detail">
-                    <!-- full member div -->
-                        <div class="full-member-div" data-username="{{username}}">
-                        </div>
-                        <!-- // full member div -->
-                        <div class="edit-info">
-                    </div>
-        </div>
-        <div class="app-contact">
-            <i class='bx bxl-facebook' ></i>
-            <i class='bx bxl-github' ></i>
-            <i class='bx bxl-linkedin-square' ></i>
-        </div>
-        <!-- // Page wrapper -->
-        <!-- post sidebar -->
-    <div class="post-sidebar">
-            <div class="card">
-                <div class="card-header">
+            <div style="container" class="error container-info-detail">
+                <!-- full member div -->
+                <div class="full-member-div" data-username="{{username}}"></div>
+                <!-- // full member div -->
+                <div class="edit-info"></div>
+            </div>
+            <div class="app-contact">
+                <i class="bx bxl-facebook"></i>
+                <i class="bx bxl-github"></i>
+                <i class="bx bxl-linkedin-square"></i>
+            </div>
+            <!-- // Page wrapper -->
+            <!-- post sidebar -->
+            {% comment %}
+            <div class="post-sidebar">
+                <div class="card">
+                    <div class="card-header"></div>
                 </div>
             </div>
         </div>
+        {% endcomment %}
+        <!-- // content -->
     </div>
-<!-- // content -->
+    {% endblock %} {% block javascript %}
+    <script>
+        let username = "{{ request.user.username }}";
+        let is_requested = "False";
+        let is_member = "False";
+        {% if request.member %}
+            is_requested = "{{ request.member.is_requested }}";
+            is_member = "{{ request.member.is_member }}";
+        {% endif %}
+    </script>
+    <script
+        type="text/javascript"
+        src="{% static 'user/js/profile_info.js' %}"
+    ></script>
+    {% endblock %}
 </div>
-{% endblock %}
-{% block javascript %}
-<script>
-    let username = "{{ request.user.username }}";
-    let is_requested = "False";
-    let is_member = "False";
-    {% if request.member %}
-        is_requested = "{{ request.member.is_requested }}";
-        is_member = "{{ request.member.is_member }}";
-    {% endif %}
-</script>
-<script type="text/javascript" src="{% static 'user/js/profile_info.js' %}"></script>
-{% endblock %}
