@@ -230,34 +230,35 @@ if (full_member) {
           ${educationsHTML}
         */
     full_member.innerHTML = `
+    
       <form class="info-form-edit" method="post" enctype="multipart/form-data">
           <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-          <label for="name">Name:</label>
+          <div class ="info-container"><label for="name">Name:</label>
           <input type="text" name="name" value="${
             memberData.name || ""
-          }" required>
-          <label for="avt">Avatar:</label>
+          }" required></div>
+          <div class="info-container avta"><label for="avt">Avatar:</label>
           ${
             memberData.avt
               ? `<img src="${memberData.avt}" alt="Avatar">`
               : '<input type="file" name="avt" accept="image/*">'
-          }
-          <label for="id">Student ID:</label>
+          }</div>
+          <div class = "info-container"><label for="id">Student ID:</label>
           <input type="text" name="id" value="${
             memberData.student_id || ""
-          }" required>
-          <label for="dob">Date of Birth:</label>
+          }" required></div>
+          <div class = "info-container"><label for="dob">Date of Birth:</label>
           <input type="date" name="dob" value="${
             memberData.dob || ""
-          }" required>
-          <label for="email">Email:</label>
+          }" required></div>
+          <div class = "info-container"><label for="email">Email:</label>
           <input type="email" name="email" value="${
             memberData.email || ""
-          }" required>
-          <label for="address">Address:</label>
+          }" required></div>
+          <div class = "info-container"><label for="address">Address:</label>
           <input type="text" name="address" id="address" value="${
             memberData.address || ""
-          }" required>
+          }" required></div>
           ${mediasHTML}
           <input type="submit" value="Save" />
       </form>

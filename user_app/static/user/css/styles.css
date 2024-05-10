@@ -153,3 +153,13 @@
     margin: 10px 194px 0 0;
     transition: all 0.5s;
 }
+
+.info-form-edit label{
+    font-weight: bold;
+}
+
+
+.info-form-edit input{
+    min-width: 60%;
+}
+
