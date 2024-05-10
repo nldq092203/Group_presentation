@@ -515,15 +515,18 @@ if (full_member) {
         //           <input type="date" name="education-end-date-0" id="education-end-date-0" value="">
         //       </div>
 
+
         // <label for="media-name-0">Name:</label>
         //           <input type="text" name="media-name-0" id="media-name-0" value=""></input>
         //       `;
 
         mediasHTML = `
-              <div class="media">
-                  <label for="media-url-0">Link github:</label>
-                  <input type="text" name="media-url-0" id="media-url-0" value="">
-              </div>
+        <div class="media">
+        <label for="media-name-0">Media's name:</label>
+        <input type="text" name="media-name-0" id="media-name-0" value="">
+        <label for="media-url-0">URL:</label>
+        <input type="text" name="media-url-0" id="media-url-0" value="">
+        </div>
               `;
         /*
          ${skillsHTML}
@@ -554,30 +557,28 @@ if (full_member) {
         if (form) {
             form.addEventListener("submit", function (event) {
                 event.preventDefault();
-                let content = {
-                    name: form.querySelector('input[name="name"]').value,
-                    avt: form.querySelector('input[name="avt"]').files[0],
-                    id: form.querySelector('input[name="id"]').value,
-                    dob: form.querySelector('input[name="dob"]').value,
-                    email: form.querySelector('input[name="email"]').value,
-                    address: form.querySelector('input[name="address"]').value,
-                    // skills: [],
-                    // experiences: [],
-                    // educations: [],
-                    medias: [],
-                };
+                let formData = new FormData();
+                formData.append('name', form.querySelector('input[name="name"]').value);
+                formData.append('avt', form.querySelector('input[name="avt"]').files[0]);
+                formData.append('id', form.querySelector('input[name="id"]').value);
+                formData.append('dob', form.querySelector('input[name="dob"]').value);
+                formData.append('email', form.querySelector('input[name="email"]').value);
+                formData.append('address', form.querySelector('input[name="address"]').value);
+
+                let mediasArray = [];
 
                 // Get skills, experiences, educations, and medias
                 // let skills = form.querySelectorAll(".skill");
                 // let experiences = form.querySelectorAll(".experience");
                 // let educations = form.querySelectorAll(".education");
                 let medias = form.querySelectorAll(".media");
+                console.log(medias);
                 // console.log(skills);
 
                 // skills.forEach((skill, index) => {
-                //     let nameSkill = form.querySelector(`#skill-name-${index}`);
+                //     let nameSkill = form.querySelector(#skill-name-${index});
                 //     let levelSkill = form.querySelector(
-                //         `#skill-level-${index}`
+                //         #skill-level-${index}
                 //     );
                 //     if (nameSkill && levelSkill)
                 //         content.skills.push({
@@ -588,13 +589,13 @@ if (full_member) {
 
                 // experiences.forEach((experience, index) => {
                 //     let titleExperience = form.querySelector(
-                //         `#experience-title-${index}`
+                //         #experience-title-${index}
                 //     );
                 //     let agencyExperience = form.querySelector(
-                //         `#experience-agency-${index}`
+                //         #experience-agency-${index}
                 //     );
                 //     let descriptionExperience = form.querySelector(
-                //         `#experience-description-${index}`
+                //         #experience-description-${index}
                 //     );
                 //     if (
                 //         titleExperience &&
@@ -610,16 +611,16 @@ if (full_member) {
 
                 // educations.forEach((education, index) => {
                 //     let institutionEducation = form.querySelector(
-                //         `#education-institution-${index}`
+                //         #education-institution-${index}
                 //     );
                 //     let degreeEducation = form.querySelector(
-                //         `#education-degree-${index}`
+                //         #education-degree-${index}
                 //     );
                 //     let start_dateEducation = form.querySelector(
-                //         `#education-start-date-${index}`
+                //         #education-start-date-${index}
                 //     );
                 //     let end_dateEducation = form.querySelector(
-                //         `#education-end-date-${index}`
+                //         #education-end-date-${index}
                 //     );
                 //     if (
                 //         institutionEducation &&
@@ -629,34 +630,36 @@ if (full_member) {
                 //     )
                 //         content.educations.push({
                 //             institution: document.querySelector(
-                //                 `#education-institution-${index}`
+                //                 #education-institution-${index}
                 //             ).value,
                 //             degree: document.querySelector(
-                //                 `#education-degree-${index}`
+                //                 #education-degree-${index}
                 //             ).value,
                 //             start_date: document.querySelector(
-                //                 `#education-start-date-${index}`
+                //                 #education-start-date-${index}
                 //             ).value,
                 //             end_date: document.querySelector(
-                //                 `#education-end-date-${index}`
+                //                 #education-end-date-${index}
                 //             ).value,
                 //         });
                 // });
 
                 medias.forEach((media, index) => {
                     let nameMedia = form.querySelector(`#media-name-${index}`);
+                    console.log(nameMedia);
                     let urlMedia = form.querySelector(`#media-url-${index}`);
+                    console.log(urlMedia);
                     if (nameMedia && urlMedia)
-                        content.medias.push({
+                        mediasArray.push({
                             name: document.querySelector(`#media-name-${index}`)
                                 .value,
                             url: document.querySelector(`#media-url-${index}`)
                                 .value,
                         });
                 });
-                formData.append('medias', medias);
+                formData.append('medias', JSON.stringify(mediasArray));
 
-                console.log(formData);
+                console.log(formData.get('medias'));
                 fetch("/api/member", {
                     method: "POST",
                     headers: {
