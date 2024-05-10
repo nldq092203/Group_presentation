@@ -65,6 +65,10 @@ if (full_member) {
                         )
                         .join("")}
                 </ul>
+
+
+
+                
                 */
                 const content = `
             
@@ -83,19 +87,19 @@ if (full_member) {
                     <div class="address">Address: <span>${
                         data.address
                     }</span></div>
-                <ul class="mediaList">
+                    <ul class="mediaList" style="list-style: none; padding-left: 0;">
                     ${(data.medias || [])
                         .map(
                             (media) => `
                     <li>
-                        <h4>${media.name}</h4>
-                        <h4>${media.url}</h4>
+                        <div>${media.name}: <span>${media.url}</span></div>
                     </li>
                     `
                         )
                         .join("")}
-                </ul>
-                </div>
+                    </ul>
+                    
+                    </div>
              
             </div>
         `;
@@ -427,17 +431,16 @@ if (full_member) {
                     
                     
                     
-                    <ul class="mediaList">
-                        ${(data.medias || [])
-                            .map(
-                                (media) => `
-                        <li>
-                            <h4>${media.name}</h4>
-                            <h4>${media.url}</h4>
-                        </li>
-                        `
-                            )
-                            .join("")}
+                    <ul class="mediaList" style="list-style: none; padding-left: 0;">
+                    ${(data.medias || [])
+                        .map(
+                            (media) => `
+                    <li>
+                        <div>${media.name}: <span>${media.url}</span></div>
+                    </li>
+                    `
+                        )
+                        .join("")}
                     </ul>
                 </div>
             `;
