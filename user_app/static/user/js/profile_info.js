@@ -531,7 +531,7 @@ if (full_member) {
           ${educationsHTML}
         */
         full_member.innerHTML = `
-        <form class="info-form-post" method="post" enctype="multipart/form-data">
+      <form class="info-form-post" method="post">
           <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
           <label for="name">Name:</label>
           <input type="text" name="name" value="" required>
@@ -554,31 +554,18 @@ if (full_member) {
         if (form) {
             form.addEventListener("submit", function (event) {
                 event.preventDefault();
-                let formData = new FormData();
-                formData.append(
-                    "name",
-                    form.querySelector('input[name="name"]').value
-                );
-                formData.append(
-                    "avt",
-                    form.querySelector('input[name="avt"]').files[0]
-                );
-                formData.append(
-                    "id",
-                    form.querySelector('input[name="id"]').value
-                );
-                formData.append(
-                    "dob",
-                    form.querySelector('input[name="dob"]').value
-                );
-                formData.append(
-                    "email",
-                    form.querySelector('input[name="email"]').value
-                );
-                formData.append(
-                    "address",
-                    form.querySelector('input[name="address"]').value
-                );
+                let content = {
+                    name: form.querySelector('input[name="name"]').value,
+                    avt: form.querySelector('input[name="avt"]').files[0],
+                    id: form.querySelector('input[name="id"]').value,
+                    dob: form.querySelector('input[name="dob"]').value,
+                    email: form.querySelector('input[name="email"]').value,
+                    address: form.querySelector('input[name="address"]').value,
+                    // skills: [],
+                    // experiences: [],
+                    // educations: [],
+                    medias: [],
+                };
 
                 // Get skills, experiences, educations, and medias
                 // let skills = form.querySelectorAll(".skill");
@@ -667,9 +654,7 @@ if (full_member) {
                                 .value,
                         });
                 });
-                formData.append("medias", medias);
-
-                console.log(formData);
+                console.log(content);
                 fetch("/api/member", {
                     method: "POST",
                     headers: {

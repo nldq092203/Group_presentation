@@ -223,24 +223,23 @@ class BaseMemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
         date_fields = ['start_date', 'end_date']  # The names of the date fields in the Education model
 
         educations = []
-        if educations_data is not None:
-            for education_data in educations_data:
-                if education_data is None:
-                    continue
-                # Parse the date strings in education_data into date objects
-                for key, value in education_data.items():
-                    if key in date_fields and isinstance(value, str):
-                        try:
-                            # Parse the date string into a date object
-                            value = datetime.strptime(value, "%Y-%m-%d").date()
-                        except ValueError:
-                            value = None
-                        education_data[key] = value
-
-                if None not in education_data.values():
-                    education, created = Education.objects.get_or_create(member=member, **education_data)
-                    educations.append(education)
-            member.educations.set(educations)
+        for education_data in educations_data:
+            if education_data is None:
+                continue
+            # Parse the date strings in education_data into date objects
+            for key, value in education_data.items():
+                if key in date_fields and isinstance(value, str):
+                    try:
+                        # Parse the date string into a date object
+                        value = datetime.strptime(value, "%Y-%m-%d").date()
+                    except ValueError:
+                        value = None
+                    education_data[key] = value
+            
+            if None not in education_data.values():
+                education, created = Education.objects.get_or_create(member=member, **education_data)
+                educations.append(education)
+        member.educations.set(educations)
 
         # Fetch or create the Media instances for the given data and set the relationship
         medias = []
