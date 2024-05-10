@@ -170,7 +170,7 @@ class BaseMemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
         email = data.get("email")
         student_id = data.get("id")
         address = data.get("address")
-        avt = data.get("avt")
+        avt = request.FILES.get("avt")
         skills_data = data.get("skills")
         experiences_data = data.get("experiences")
         educations_data = data.get("educations")
@@ -205,46 +205,50 @@ class BaseMemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
 
         # Fetch or create the Skill instances for the given data and set the relationship
         skills = []
-        for skill_data in skills_data:
-            skill, created = Skill.objects.get_or_create(member = member, **skill_data)
-            skills.append(skill)
-        member.skills.set(skills)
+        if skills_data is not None:
+            for skill_data in skills_data:
+                skill, created = Skill.objects.get_or_create(member = member, **skill_data)
+                skills.append(skill)
+            member.skills.set(skills)
 
         # Fetch or create the Experience instances for the given data and set the relationship
         experiences = []
-        for experience_data in experiences_data:
-            experience, created = Experience.objects.get_or_create(member=member, **experience_data)
-            experiences.append(experience)
-        member.experiences.set(experiences)
+        if experiences_data is not None:
+            for experience_data in experiences_data:
+                experience, created = Experience.objects.get_or_create(member=member, **experience_data)
+                experiences.append(experience)
+            member.experiences.set(experiences)
 
         # Fetch or create the Education instances for the given data and set the relationship
         date_fields = ['start_date', 'end_date']  # The names of the date fields in the Education model
 
         educations = []
-        for education_data in educations_data:
-            if education_data is None:
-                continue
-            # Parse the date strings in education_data into date objects
-            for key, value in education_data.items():
-                if key in date_fields and isinstance(value, str):
-                    try:
-                        # Parse the date string into a date object
-                        value = datetime.strptime(value, "%Y-%m-%d").date()
-                    except ValueError:
-                        value = None
-                    education_data[key] = value
-            
-            if None not in education_data.values():
-                education, created = Education.objects.get_or_create(member=member, **education_data)
-                educations.append(education)
-        member.educations.set(educations)
+        if educations_data is not None:
+            for education_data in educations_data:
+                if education_data is None:
+                    continue
+                # Parse the date strings in education_data into date objects
+                for key, value in education_data.items():
+                    if key in date_fields and isinstance(value, str):
+                        try:
+                            # Parse the date string into a date object
+                            value = datetime.strptime(value, "%Y-%m-%d").date()
+                        except ValueError:
+                            value = None
+                        education_data[key] = value
+
+                if None not in education_data.values():
+                    education, created = Education.objects.get_or_create(member=member, **education_data)
+                    educations.append(education)
+            member.educations.set(educations)
 
         # Fetch or create the Media instances for the given data and set the relationship
         medias = []
-        for media_data in medias_data:
-            media, created = Media.objects.get_or_create(member = member, **media_data)
-            medias.append(media)
-        member.medias.set(medias)
+        if medias_data is not None:
+            for media_data in medias_data:
+                media, created = Media.objects.get_or_create(member = member, **media_data)
+                medias.append(media)
+            member.medias.set(medias)
 
         
 

@@ -515,7 +515,6 @@ if (full_member) {
         //           <input type="date" name="education-end-date-0" id="education-end-date-0" value="">
         //       </div>
 
-
         // <label for="media-name-0">Name:</label>
         //           <input type="text" name="media-name-0" id="media-name-0" value=""></input>
         //       `;
@@ -532,7 +531,7 @@ if (full_member) {
           ${educationsHTML}
         */
         full_member.innerHTML = `
-      <form class="info-form-post" method="post">
+        <form class="info-form-post" method="post" enctype="multipart/form-data">
           <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
           <label for="name">Name:</label>
           <input type="text" name="name" value="" required>
@@ -555,18 +554,31 @@ if (full_member) {
         if (form) {
             form.addEventListener("submit", function (event) {
                 event.preventDefault();
-                let content = {
-                    name: form.querySelector('input[name="name"]').value,
-                    avt: form.querySelector('input[name="avt"]').files[0],
-                    id: form.querySelector('input[name="id"]').value,
-                    dob: form.querySelector('input[name="dob"]').value,
-                    email: form.querySelector('input[name="email"]').value,
-                    address: form.querySelector('input[name="address"]').value,
-                    // skills: [],
-                    // experiences: [],
-                    // educations: [],
-                    medias: [],
-                };
+                let formData = new FormData();
+                formData.append(
+                    "name",
+                    form.querySelector('input[name="name"]').value
+                );
+                formData.append(
+                    "avt",
+                    form.querySelector('input[name="avt"]').files[0]
+                );
+                formData.append(
+                    "id",
+                    form.querySelector('input[name="id"]').value
+                );
+                formData.append(
+                    "dob",
+                    form.querySelector('input[name="dob"]').value
+                );
+                formData.append(
+                    "email",
+                    form.querySelector('input[name="email"]').value
+                );
+                formData.append(
+                    "address",
+                    form.querySelector('input[name="address"]').value
+                );
 
                 // Get skills, experiences, educations, and medias
                 // let skills = form.querySelectorAll(".skill");
@@ -655,19 +667,20 @@ if (full_member) {
                                 .value,
                         });
                 });
-                console.log(content);
+                formData.append("medias", medias);
+
+                console.log(formData);
                 fetch("/api/member", {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json",
                         "X-CSRFToken": csrftoken,
                     },
-                    body: JSON.stringify(content),
+                    body: formData,
                 })
                     .then((response) => response.json())
                     .then((data) => {
                         console.log(data);
-                        location.reload();
+                        // location.reload();
                     });
             });
         }

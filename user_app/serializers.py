@@ -4,7 +4,7 @@ from .models import User, Member, Skill, Experience, Education, Media
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'role']
+        fields = ['id', 'username', 'role', 'email']
 
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,5 +33,5 @@ class MemberSerializer(serializers.ModelSerializer):
     medias = MediaSerializer(many=True, read_only=True)
     class Meta:
         model = Member
-        fields = ['id', 'username', 'name', 'dob', 'avt', 'address', 'student_id', 'skills', 'experiences', 'educations', 'medias']
+        fields = ['id', 'username', 'name', 'dob', 'avt', 'address', 'student_id', 'skills', 'experiences', 'educations', 'medias', 'email']
 
