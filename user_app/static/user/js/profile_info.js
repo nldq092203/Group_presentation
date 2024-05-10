@@ -419,31 +419,42 @@ if (full_member) {
                     </ul>
                         */
                         const content = `
-                <h3>${data.name}</h3>
-                <div class="info">
-                    <img class="avt" src="${data.avt}" alt="${
+                        <div class="info">
+                            <img class="avt" src="${data.avt}" alt="${
                             data.name
                         } Avatar" style="max-height:100px">
-                    <div class="id"><p>Student ID: </p>${data.student_id}</div>
-                    <div class="dob"><p>Birthday: </p>${data.dob}</div>
-                    <div class="email"><p>Email: </p>${data.email}</div>
-                    <div class="address"><p>Address: </p>${data.address}</div>
+                        <div class="info-user">
+                        
+                            <h3><p>${data.name}</p></h3>
+                            <div class="id">Student ID: <span>${
+                                data.student_id
+                            }</span></div>
+                            <div class="dob">Birthday: <span>${
+                                data.dob
+                            }</span></div>
+                            <div class="email">Email: <span>${
+                                data.email
+                            }</span></div>
+                            <div class="address">Address: <span>${
+                                data.address
+                            }</span></div>
                     
                     
                     
-                    <ul class="mediaList" style="list-style: none; padding-left: 0;">
-                    ${(data.medias || [])
-                        .map(
-                            (media) => `
-                    <li>
-                        <div>${media.name}: <span>${media.url}</span></div>
-                    </li>
-                    `
-                        )
-                        .join("")}
-                    </ul>
-                </div>
-            `;
+                            <ul class="mediaList" style="list-style: none; padding-left: 0;">
+                            ${(data.medias || [])
+                                .map(
+                                    (media) => `
+                            <li>
+                                <div>${media.name}: <span>${media.url}</span></div>
+                            </li>
+                            `
+                                )
+                                .join("")}
+                            </ul>
+                            </div>
+                        </div>
+                        `;
 
                         // Insert the content into the full_member div
                         full_member.innerHTML = content;
@@ -515,7 +526,6 @@ if (full_member) {
         //           <input type="date" name="education-end-date-0" id="education-end-date-0" value="">
         //       </div>
 
-
         // <label for="media-name-0">Name:</label>
         //           <input type="text" name="media-name-0" id="media-name-0" value=""></input>
         //       `;
@@ -558,12 +568,30 @@ if (full_member) {
             form.addEventListener("submit", function (event) {
                 event.preventDefault();
                 let formData = new FormData();
-                formData.append('name', form.querySelector('input[name="name"]').value);
-                formData.append('avt', form.querySelector('input[name="avt"]').files[0]);
-                formData.append('id', form.querySelector('input[name="id"]').value);
-                formData.append('dob', form.querySelector('input[name="dob"]').value);
-                formData.append('email', form.querySelector('input[name="email"]').value);
-                formData.append('address', form.querySelector('input[name="address"]').value);
+                formData.append(
+                    "name",
+                    form.querySelector('input[name="name"]').value
+                );
+                formData.append(
+                    "avt",
+                    form.querySelector('input[name="avt"]').files[0]
+                );
+                formData.append(
+                    "id",
+                    form.querySelector('input[name="id"]').value
+                );
+                formData.append(
+                    "dob",
+                    form.querySelector('input[name="dob"]').value
+                );
+                formData.append(
+                    "email",
+                    form.querySelector('input[name="email"]').value
+                );
+                formData.append(
+                    "address",
+                    form.querySelector('input[name="address"]').value
+                );
 
                 let mediasArray = [];
 
@@ -657,9 +685,9 @@ if (full_member) {
                                 .value,
                         });
                 });
-                formData.append('medias', JSON.stringify(mediasArray));
+                formData.append("medias", JSON.stringify(mediasArray));
 
-                console.log(formData.get('medias'));
+                console.log(formData.get("medias"));
                 fetch("/api/member", {
                     method: "POST",
                     headers: {
