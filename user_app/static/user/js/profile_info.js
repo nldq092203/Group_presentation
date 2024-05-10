@@ -531,7 +531,7 @@ if (full_member) {
           ${educationsHTML}
         */
         full_member.innerHTML = `
-      <form class="info-form-post" method="post">
+      <form class="info-form-post" method="post" enctype="multipart/form-data">
           <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
           <label for="name">Name:</label>
           <input type="text" name="name" value="" required>
@@ -654,7 +654,9 @@ if (full_member) {
                                 .value,
                         });
                 });
-                console.log(content);
+                formData.append('medias', medias);
+
+                console.log(formData);
                 fetch("/api/member", {
                     method: "POST",
                     headers: {
