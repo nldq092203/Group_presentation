@@ -514,13 +514,15 @@ if (full_member) {
         //           <label for="education-end-date-0">End Date:</label>
         //           <input type="date" name="education-end-date-0" id="education-end-date-0" value="">
         //       </div>
+
+
+        // <label for="media-name-0">Name:</label>
+        //           <input type="text" name="media-name-0" id="media-name-0" value=""></input>
         //       `;
 
         mediasHTML = `
               <div class="media">
-                  <label for="media-name-0">Name:</label>
-                  <input type="text" name="media-name-0" id="media-name-0" value="">
-                  <label for="media-url-0">URL:</label>
+                  <label for="media-url-0">Link github:</label>
                   <input type="text" name="media-url-0" id="media-url-0" value="">
               </div>
               `;

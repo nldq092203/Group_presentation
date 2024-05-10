@@ -24,6 +24,7 @@
 }
 
 /* Hùng làm */
+
 .info-form-post label {
     display: inline-block;
     width: 15%;
@@ -32,7 +33,7 @@
 
 .info-form-post input {
     overflow: visible;
-    width: 400px;
+    width: 75%;
     padding: 4px;
     border: 1px gray solid;
     border-radius: 8px;
