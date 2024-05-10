@@ -25,22 +25,7 @@ if (full_member) {
             .then((data) => {
                 memberData = data;
                 console.log(data);
-                const content = `
-            
-            <div class="info">
-                <img class="avt" src="${data.avt}" alt="${data.name} Avatar" >
-                <div class="info-user">
-                    
-                    <h3>I'm  <p>${data.name}</p></h3>
-                    <div class="dob">Date of Birth: <span>${
-                        data.dob
-                    }</span></div>
-                    <div class="id">Phone: <span>${data.student_id}</span></div>
-                    <div class="email">Email: <span>${data.email}</span></div>
-                    <div class="address">Address: <span>${
-                        data.address
-                    }</span></div>
-                    
+                /*
                 <ul class="skillList">
                     ${(data.skills || [])
                         .map(
@@ -80,7 +65,24 @@ if (full_member) {
                         )
                         .join("")}
                 </ul>
-                
+                */
+                const content = `
+            
+            <div class="info">
+                <img class="avt" src="${data.avt}" alt="${data.name} Avatar" >
+                <div class="info-user">
+                    
+                    <h3>I'm  <p>${data.name}</p></h3>
+                    <div class="id">Student ID: <span>${
+                        data.student_id
+                    }</span></div>
+                    <div class="dob">Date of Birth: <span>${
+                        data.dob
+                    }</span></div>
+                    <div class="email">Email: <span>${data.email}</span></div>
+                    <div class="address">Address: <span>${
+                        data.address
+                    }</span></div>
                 <ul class="mediaList">
                     ${(data.medias || [])
                         .map(
@@ -134,73 +136,73 @@ if (full_member) {
     }
 
     function edit() {
-        let skillsHTML = "";
-        let experiencesHTML = "";
-        let educationsHTML = "";
+        // let skillsHTML = "";
+        // let experiencesHTML = "";
+        // let educationsHTML = "";
         let mediasHTML = "";
 
-        if (memberData.skills) {
-            memberData.skills.forEach((skill, index) => {
-                skillsHTML += `
-              <div class="skill">
-                  <label for="skill-name-${index}">Skill Name:</label>
-                  <input type="text" name="skill-name-${index}" id="skill-name-${index}" value="${
-                    skill.name || ""
-                }">
-                  <label for="skill-level-${index}">Skill Level:</label>
-                  <input type="text" name="skill-level-${index}" id="skill-level-${index}" value="${
-                    skill.level || ""
-                }">
-              </div>
-              `;
-            });
-        }
+        // if (memberData.skills) {
+        //     memberData.skills.forEach((skill, index) => {
+        //         skillsHTML += `
+        //       <div class="skill">
+        //           <label for="skill-name-${index}">Skill Name:</label>
+        //           <input type="text" name="skill-name-${index}" id="skill-name-${index}" value="${
+        //             skill.name || ""
+        //         }">
+        //           <label for="skill-level-${index}">Skill Level:</label>
+        //           <input type="text" name="skill-level-${index}" id="skill-level-${index}" value="${
+        //             skill.level || ""
+        //         }">
+        //       </div>
+        //       `;
+        //     });
+        // }
 
-        if (memberData.experiences) {
-            memberData.experiences.forEach((experience, index) => {
-                experiencesHTML += `
-              <div class="experience">
-                  <label for="experience-title-${index}">Title:</label>
-                  <input type="text" name="experience-title-${index}" id="experience-title-${index}" value="${
-                    experience.title || ""
-                }">
-                  <label for="experience-agency-${index}">Agency:</label>
-                  <input type="text" name="experience-agency-${index}" id="experience-agency-${index}" value="${
-                    experience.agency || ""
-                }">
-                  <label for="experience-description-${index}">Description:</label>
-                  <textarea name="experience-description-${index}" id="experience-description-${index}">${
-                    experience.description || ""
-                }</textarea>
-              </div>
-              `;
-            });
-        }
+        // if (memberData.experiences) {
+        //     memberData.experiences.forEach((experience, index) => {
+        //         experiencesHTML += `
+        //       <div class="experience">
+        //           <label for="experience-title-${index}">Title:</label>
+        //           <input type="text" name="experience-title-${index}" id="experience-title-${index}" value="${
+        //             experience.title || ""
+        //         }">
+        //           <label for="experience-agency-${index}">Agency:</label>
+        //           <input type="text" name="experience-agency-${index}" id="experience-agency-${index}" value="${
+        //             experience.agency || ""
+        //         }">
+        //           <label for="experience-description-${index}">Description:</label>
+        //           <textarea name="experience-description-${index}" id="experience-description-${index}">${
+        //             experience.description || ""
+        //         }</textarea>
+        //       </div>
+        //       `;
+        //     });
+        // }
 
-        if (memberData.educations) {
-            memberData.educations.forEach((education, index) => {
-                educationsHTML += `
-              <div class="education">
-                  <label for="education-institution-${index}">Institution:</label>
-                  <input type="text" name="education-institution-${index}" id="education-institution-${index}" value="${
-                    education.institution || ""
-                }">
-                  <label for="education-degree-${index}">Degree:</label>
-                  <input type="text" name="education-degree-${index}" id="education-degree-${index}" value="${
-                    education.degree || ""
-                }">
-                  <label for="education-start-date-${index}">Start Date:</label>
-                  <input type="date" name="education-start-date-${index}" id="education-start-date-${index}" value="${
-                    education.start_date || ""
-                }">
-                  <label for="education-end-date-${index}">End Date:</label>
-                  <input type="date" name="education-end-date-${index}" id="education-end-date-${index}" value="${
-                    education.end_date || ""
-                }">
-              </div>
-              `;
-            });
-        }
+        // if (memberData.educations) {
+        //     memberData.educations.forEach((education, index) => {
+        //         educationsHTML += `
+        //       <div class="education">
+        //           <label for="education-institution-${index}">Institution:</label>
+        //           <input type="text" name="education-institution-${index}" id="education-institution-${index}" value="${
+        //             education.institution || ""
+        //         }">
+        //           <label for="education-degree-${index}">Degree:</label>
+        //           <input type="text" name="education-degree-${index}" id="education-degree-${index}" value="${
+        //             education.degree || ""
+        //         }">
+        //           <label for="education-start-date-${index}">Start Date:</label>
+        //           <input type="date" name="education-start-date-${index}" id="education-start-date-${index}" value="${
+        //             education.start_date || ""
+        //         }">
+        //           <label for="education-end-date-${index}">End Date:</label>
+        //           <input type="date" name="education-end-date-${index}" id="education-end-date-${index}" value="${
+        //             education.end_date || ""
+        //         }">
+        //       </div>
+        //       `;
+        //     });
+        // }
 
         if (memberData.medias) {
             memberData.medias.forEach((media, index) => {
@@ -218,7 +220,11 @@ if (full_member) {
               `;
             });
         }
-
+        /* 
+        ${skillsHTML}
+          ${experiencesHTML}
+          ${educationsHTML}
+        */
         full_member.innerHTML = `
       <form class="info-form-edit" method="post">
           <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
@@ -226,13 +232,13 @@ if (full_member) {
           <input type="text" name="name" value="${
               memberData.name || ""
           }" required>
-          <label for="dob">Date of Birth:</label>
-          <input type="date" name="dob" value="${
-              memberData.dob || ""
-          }" required>
           <label for="id">Student ID:</label>
           <input type="text" name="id" value="${
               memberData.student_id || ""
+          }" required>
+          <label for="dob">Date of Birth:</label>
+          <input type="date" name="dob" value="${
+              memberData.dob || ""
           }" required>
           <label for="email">Email:</label>
           <input type="email" name="email" value="${
@@ -242,9 +248,6 @@ if (full_member) {
           <input type="text" name="address" id="address" value="${
               memberData.address || ""
           }" required>
-          ${skillsHTML}
-          ${experiencesHTML}
-          ${educationsHTML}
           ${mediasHTML}
           <input type="submit" value="Save" />
       </form>
@@ -255,90 +258,90 @@ if (full_member) {
                 e.preventDefault();
                 let content = {
                     name: form.querySelector('input[name="name"]').value,
-                    dob: form.querySelector('input[name="dob"]').value,
                     id: form.querySelector('input[name="id"]').value,
+                    dob: form.querySelector('input[name="dob"]').value,
                     email: form.querySelector('input[name="email"]').value,
                     address: form.querySelector('input[name="address"]').value,
-                    skills: [],
-                    experiences: [],
-                    educations: [],
+                    // skills: [],
+                    // experiences: [],
+                    // educations: [],
                     medias: [],
                 };
 
                 // Get skills, experiences, educations, and medias
-                let skills = document.querySelectorAll(".skill");
-                let experiences = document.querySelectorAll(".experience");
-                let educations = document.querySelectorAll(".education");
+                // let skills = document.querySelectorAll(".skill");
+                // let experiences = document.querySelectorAll(".experience");
+                // let educations = document.querySelectorAll(".education");
                 let medias = document.querySelectorAll(".media");
 
-                skills.forEach((skill, index) => {
-                    let nameSkill = form.querySelector(`#skill-name-${index}`);
-                    let levelSkill = form.querySelector(
-                        `#skill-level-${index}`
-                    );
-                    if (nameSkill && levelSkill)
-                        content.skills.push({
-                            name: nameSkill.value,
-                            level: levelSkill.value,
-                        });
-                });
+                // skills.forEach((skill, index) => {
+                //     let nameSkill = form.querySelector(`#skill-name-${index}`);
+                //     let levelSkill = form.querySelector(
+                //         `#skill-level-${index}`
+                //     );
+                //     if (nameSkill && levelSkill)
+                //         content.skills.push({
+                //             name: nameSkill.value,
+                //             level: levelSkill.value,
+                //         });
+                // });
 
-                experiences.forEach((experience, index) => {
-                    let titleExperience = form.querySelector(
-                        `#experience-title-${index}`
-                    );
-                    let agencyExperience = form.querySelector(
-                        `#experience-agency-${index}`
-                    );
-                    let descriptionExperience = form.querySelector(
-                        `#experience-description-${index}`
-                    );
-                    if (
-                        titleExperience &&
-                        agencyExperience &&
-                        descriptionExperience
-                    )
-                        content.experiences.push({
-                            title: titleExperience.value,
-                            agency: agencyExperience.value,
-                            description: descriptionExperience.value,
-                        });
-                });
+                // experiences.forEach((experience, index) => {
+                //     let titleExperience = form.querySelector(
+                //         `#experience-title-${index}`
+                //     );
+                //     let agencyExperience = form.querySelector(
+                //         `#experience-agency-${index}`
+                //     );
+                //     let descriptionExperience = form.querySelector(
+                //         `#experience-description-${index}`
+                //     );
+                //     if (
+                //         titleExperience &&
+                //         agencyExperience &&
+                //         descriptionExperience
+                //     )
+                //         content.experiences.push({
+                //             title: titleExperience.value,
+                //             agency: agencyExperience.value,
+                //             description: descriptionExperience.value,
+                //         });
+                // });
 
-                educations.forEach((education, index) => {
-                    let institutionEducation = form.querySelector(
-                        `#education-institution-${index}`
-                    );
-                    let degreeEducation = form.querySelector(
-                        `#education-degree-${index}`
-                    );
-                    let start_dateEducation = form.querySelector(
-                        `#education-start-date-${index}`
-                    );
-                    let end_dateEducation = form.querySelector(
-                        `#education-end-date-${index}`
-                    );
-                    if (
-                        institutionEducation &&
-                        degreeEducation &&
-                        start_dateEducation &&
-                        end_dateEducation
-                    )
-                        content.educations.push({
-                            institution: document.querySelector(
-                                `#education-institution-${index}`
-                            ).value,
-                            degree: document.querySelector(
-                                `#education-degree-${index}`
-                            ).value,
-                            start_date: document.querySelector(
-                                `#education-start-date-${index}`
-                            ).value,
-                            end_date: document.querySelector(
-                                `#education-end-date-${index}`
-                            ).value,
-                        });
-                });
+                // educations.forEach((education, index) => {
+                //     let institutionEducation = form.querySelector(
+                //         `#education-institution-${index}`
+                //     );
+                //     let degreeEducation = form.querySelector(
+                //         `#education-degree-${index}`
+                //     );
+                //     let start_dateEducation = form.querySelector(
+                //         `#education-start-date-${index}`
+                //     );
+                //     let end_dateEducation = form.querySelector(
+                //         `#education-end-date-${index}`
+                //     );
+                //     if (
+                //         institutionEducation &&
+                //         degreeEducation &&
+                //         start_dateEducation &&
+                //         end_dateEducation
+                //     )
+                //         content.educations.push({
+                //             institution: document.querySelector(
+                //                 `#education-institution-${index}`
+                //             ).value,
+                //             degree: document.querySelector(
+                //                 `#education-degree-${index}`
+                //             ).value,
+                //             start_date: document.querySelector(
+                //                 `#education-start-date-${index}`
+                //             ).value,
+                //             end_date: document.querySelector(
+                //                 `#education-end-date-${index}`
+                //             ).value,
+                //         });
+                // });
 
                 medias.forEach((media, index) => {
                     let nameMedia = form.querySelector(`#media-name-${index}`);
@@ -370,17 +373,8 @@ if (full_member) {
                     .then((data) => {
                         console.log(data);
                         data = data.member;
-                        const content = `
-                <h1>${data.name}</h1>
-                <div class="info">
-                    <img class="avt" src="${data.avt}" alt="${
-                            data.name
-                        } Avatar" style="max-height:100px">
-                    <div class="dob">${data.dob}</div>
-                    <div class="id">${data.student_id}</div>
-                    <div class="email">${data.email}</div>
-                    <div class="address">${data.address}</div>
-                    <ul class="skillList">
+                        /*
+                        <ul class="skillList">
                         ${(data.skills || [])
                             .map(
                                 (skill) => `
@@ -388,19 +382,6 @@ if (full_member) {
                                 <h4>${skill.name}</h4>
                                 <h4>${skill.level}</h4>
                             </li>
-                        `
-                            )
-                            .join("")}
-                    </ul>
-                    <ul class="experienceList">
-                        ${(data.experiences || [])
-                            .map(
-                                (experience) => `
-                        <li>
-                            <h4>${experience.title}</h4>
-                            <h4>${experience.agency}</h4>
-                            <h4>${experience.description}</h4>
-                        </li>
                         `
                             )
                             .join("")}
@@ -419,6 +400,33 @@ if (full_member) {
                             )
                             .join("")}
                     </ul>
+                    <ul class="experienceList">
+                        ${(data.experiences || [])
+                            .map(
+                                (experience) => `
+                        <li>
+                            <h4>${experience.title}</h4>
+                            <h4>${experience.agency}</h4>
+                            <h4>${experience.description}</h4>
+                        </li>
+                        `
+                            )
+                            .join("")}
+                    </ul>
+                        */
+                        const content = `
+                <h3>${data.name}</h3>
+                <div class="info">
+                    <img class="avt" src="${data.avt}" alt="${
+                            data.name
+                        } Avatar" style="max-height:100px">
+                    <div class="id"><p>Student ID: </p>${data.student_id}</div>
+                    <div class="dob"><p>Birthday: </p>${data.dob}</div>
+                    <div class="email"><p>Email: </p>${data.email}</div>
+                    <div class="address"><p>Address: </p>${data.address}</div>
+                    
+                    
+                    
                     <ul class="mediaList">
                         ${(data.medias || [])
                             .map(
@@ -441,69 +449,69 @@ if (full_member) {
         }
     }
     function join() {
-        let skillsHTML = "";
-        let experiencesHTML = "";
-        let educationsHTML = "";
+        // let skillsHTML = "";
+        // let experiencesHTML = "";
+        // let educationsHTML = "";
         let mediasHTML = "";
 
-        skillsHTML = `
-    <div id="skills-container">
-      <div class="skill">
-        <label for="skill-name-0">Skill Name:</label>
-        <input type="text" name="skill-name-0" id="skill-name-0" value="">
-        <label for="skill-level-0">Skill Level:</label>
-        <input type="text" name="skill-level-0" id="skill-level-0" value="">
-      </div>
-    </div>
-  `;
-        if (document.querySelector("#add-skill"))
-            document
-                .querySelector("#add-skill")
-                .addEventListener("click", function (e) {
-                    e.preventDefault(); // Prevent the form from being submitted
+        //         skillsHTML = `
+        //     <div id="skills-container">
+        //       <div class="skill">
+        //         <label for="skill-name-0">Skill Name:</label>
+        //         <input type="text" name="skill-name-0" id="skill-name-0" value="">
+        //         <label for="skill-level-0">Skill Level:</label>
+        //         <input type="text" name="skill-level-0" id="skill-level-0" value="">
+        //       </div>
+        //     </div>
+        //   `;
+        //     if (document.querySelector("#add-skill"))
+        //         document
+        //             .querySelector("#add-skill")
+        //             .addEventListener("click", function (e) {
+        //                 e.preventDefault(); // Prevent the form from being submitted
 
-                    // Get the current number of skills
-                    let skillCount = document.querySelectorAll(".skill").length;
+        //                 // Get the current number of skills
+        //                 let skillCount = document.querySelectorAll(".skill").length;
 
-                    // Create a new set of input fields
-                    let newSkillHTML = `
-        <div class="skill">
-          <label for="skill-name-${skillCount}">Skill Name:</label>
-          <input type="text" name="skill-name-${skillCount}" id="skill-name-${skillCount}" value="">
-          <label for="skill-level-${skillCount}">Skill Level:</label>
-          <input type="text" name="skill-level-${skillCount}" id="skill-level-${skillCount}" value="">
-        </div>
-      `;
+        //                 // Create a new set of input fields
+        //                 let newSkillHTML = `
+        //     <div class="skill">
+        //       <label for="skill-name-${skillCount}">Skill Name:</label>
+        //       <input type="text" name="skill-name-${skillCount}" id="skill-name-${skillCount}" value="">
+        //       <label for="skill-level-${skillCount}">Skill Level:</label>
+        //       <input type="text" name="skill-level-${skillCount}" id="skill-level-${skillCount}" value="">
+        //     </div>
+        //   `;
 
-                    // Append the new input fields to the skills container
-                    document
-                        .querySelector("#skills-container")
-                        .insertAdjacentHTML("beforeend", newSkillHTML);
-                });
+        // Append the new input fields to the skills container
+        //     document
+        //         .querySelector("#skills-container")
+        //         .insertAdjacentHTML("beforeend", newSkillHTML);
+        // });
 
-        experiencesHTML = `
-              <div class="experience">
-                  <label for="experience-title-0">Title:</label>
-                  <input type="text" name="experience-title-0" id="experience-title-0" value="">
-                  <label for="experience-agency-0">Agency:</label>
-                  <input type="text" name="experience-agency-0" id="experience-agency-0 value="">
-                  <label for="experience-description-0">Description:</label>
-                  <textarea name="experience-description-0" id="experience-description-0"></textarea>
-              </div>
-              `;
+        // experiencesHTML = `
+        //       <div class="experience">
+        //           <label for="experience-title-0">Title:</label>
+        //           <input type="text" name="experience-title-0" id="experience-title-0" value="">
+        //           <label for="experience-agency-0">Agency:</label>
+        //           <input type="text" name="experience-agency-0" id="experience-agency-0 value="">
+        //           <label for="experience-description-0">Description:</label>
+        //           <textarea name="experience-description-0" id="experience-description-0"></textarea>
+        //       </div>
+        //       `;
 
-        educationsHTML = `
-              <div class="education">
-                  <label for="education-institution-0">Institution:</label>
-                  <input type="text" name="education-institution-0" id="education-institution-0" value="">
-                  <label for="education-degree-0">Degree:</label>
-                  <input type="text" name="education-degree-0" id="education-degree-0" value="">
-                  <label for="education-start-date-0">Start Date:</label>
-                  <input type="date" name="education-start-date-0" id="education-start-date-0" value="">
-                  <label for="education-end-date-0">End Date:</label>
-                  <input type="date" name="education-end-date-0" id="education-end-date-0" value="">
-              </div>
-              `;
+        // educationsHTML = `
+        //       <div class="education">
+        //           <label for="education-institution-0">Institution:</label>
+        //           <input type="text" name="education-institution-0" id="education-institution-0" value="">
+        //           <label for="education-degree-0">Degree:</label>
+        //           <input type="text" name="education-degree-0" id="education-degree-0" value="">
+        //           <label for="education-start-date-0">Start Date:</label>
+        //           <input type="date" name="education-start-date-0" id="education-start-date-0" value="">
+        //           <label for="education-end-date-0">End Date:</label>
+        //           <input type="date" name="education-end-date-0" id="education-end-date-0" value="">
+        //       </div>
+        //       `;
 
         mediasHTML = `
               <div class="media">
@@ -513,7 +521,11 @@ if (full_member) {
                   <input type="text" name="media-url-0" id="media-url-0" value="">
               </div>
               `;
-
+        /*
+         ${skillsHTML}
+          ${experiencesHTML}
+          ${educationsHTML}
+        */
         full_member.innerHTML = `
       <form class="info-form-post" method="post">
           <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
@@ -521,17 +533,14 @@ if (full_member) {
           <input type="text" name="name" value="" required>
           <label for="avt">Avatar:</label>
           <input type="file" name="avt" accept="image/*">
-          <label for="dob">Date of Birth:</label>
-          <input type="date" name="dob" value="" required>
           <label for="id">Student ID:</label>
           <input type="text" name="id" value="" required>
+          <label for="dob">Date of Birth:</label>
+          <input type="date" name="dob" value="" required>
           <label for="email">Email:</label>
           <input type="email" name="email" value="" required>
           <label for="address">Address:</label>
           <input type="text" name="address" id="address" value="" required>
-          ${skillsHTML}
-          ${experiencesHTML}
-          ${educationsHTML}
           ${mediasHTML}
           <input type="submit" value="Save" />
       </form>
@@ -544,91 +553,91 @@ if (full_member) {
                 let content = {
                     name: form.querySelector('input[name="name"]').value,
                     avt: form.querySelector('input[name="avt"]').files[0],
-                    dob: form.querySelector('input[name="dob"]').value,
                     id: form.querySelector('input[name="id"]').value,
+                    dob: form.querySelector('input[name="dob"]').value,
                     email: form.querySelector('input[name="email"]').value,
                     address: form.querySelector('input[name="address"]').value,
-                    skills: [],
-                    experiences: [],
-                    educations: [],
+                    // skills: [],
+                    // experiences: [],
+                    // educations: [],
                     medias: [],
                 };
 
                 // Get skills, experiences, educations, and medias
-                let skills = form.querySelectorAll(".skill");
-                let experiences = form.querySelectorAll(".experience");
-                let educations = form.querySelectorAll(".education");
+                // let skills = form.querySelectorAll(".skill");
+                // let experiences = form.querySelectorAll(".experience");
+                // let educations = form.querySelectorAll(".education");
                 let medias = form.querySelectorAll(".media");
-                console.log(skills);
+                // console.log(skills);
 
-                skills.forEach((skill, index) => {
-                    let nameSkill = form.querySelector(`#skill-name-${index}`);
-                    let levelSkill = form.querySelector(
-                        `#skill-level-${index}`
-                    );
-                    if (nameSkill && levelSkill)
-                        content.skills.push({
-                            name: nameSkill.value,
-                            level: levelSkill.value,
-                        });
-                });
+                // skills.forEach((skill, index) => {
+                //     let nameSkill = form.querySelector(`#skill-name-${index}`);
+                //     let levelSkill = form.querySelector(
+                //         `#skill-level-${index}`
+                //     );
+                //     if (nameSkill && levelSkill)
+                //         content.skills.push({
+                //             name: nameSkill.value,
+                //             level: levelSkill.value,
+                //         });
+                // });
 
-                experiences.forEach((experience, index) => {
-                    let titleExperience = form.querySelector(
-                        `#experience-title-${index}`
-                    );
-                    let agencyExperience = form.querySelector(
-                        `#experience-agency-${index}`
-                    );
-                    let descriptionExperience = form.querySelector(
-                        `#experience-description-${index}`
-                    );
-                    if (
-                        titleExperience &&
-                        agencyExperience &&
-                        descriptionExperience
-                    )
-                        content.experiences.push({
-                            title: titleExperience.value,
-                            agency: agencyExperience.value,
-                            description: descriptionExperience.value,
-                        });
-                });
+                // experiences.forEach((experience, index) => {
+                //     let titleExperience = form.querySelector(
+                //         `#experience-title-${index}`
+                //     );
+                //     let agencyExperience = form.querySelector(
+                //         `#experience-agency-${index}`
+                //     );
+                //     let descriptionExperience = form.querySelector(
+                //         `#experience-description-${index}`
+                //     );
+                //     if (
+                //         titleExperience &&
+                //         agencyExperience &&
+                //         descriptionExperience
+                //     )
+                //         content.experiences.push({
+                //             title: titleExperience.value,
+                //             agency: agencyExperience.value,
+                //             description: descriptionExperience.value,
+                //         });
+                // });
 
-                educations.forEach((education, index) => {
-                    let institutionEducation = form.querySelector(
-                        `#education-institution-${index}`
-                    );
-                    let degreeEducation = form.querySelector(
-                        `#education-degree-${index}`
-                    );
-                    let start_dateEducation = form.querySelector(
-                        `#education-start-date-${index}`
-                    );
-                    let end_dateEducation = form.querySelector(
-                        `#education-end-date-${index}`
-                    );
-                    if (
-                        institutionEducation &&
-                        degreeEducation &&
-                        start_dateEducation &&
-                        end_dateEducation
-                    )
-                        content.educations.push({
-                            institution: document.querySelector(
-                                `#education-institution-${index}`
-                            ).value,
-                            degree: document.querySelector(
-                                `#education-degree-${index}`
-                            ).value,
-                            start_date: document.querySelector(
-                                `#education-start-date-${index}`
-                            ).value,
-                            end_date: document.querySelector(
-                                `#education-end-date-${index}`
-                            ).value,
-                        });
-                });
+                // educations.forEach((education, index) => {
+                //     let institutionEducation = form.querySelector(
+                //         `#education-institution-${index}`
+                //     );
+                //     let degreeEducation = form.querySelector(
+                //         `#education-degree-${index}`
+                //     );
+                //     let start_dateEducation = form.querySelector(
+                //         `#education-start-date-${index}`
+                //     );
+                //     let end_dateEducation = form.querySelector(
+                //         `#education-end-date-${index}`
+                //     );
+                //     if (
+                //         institutionEducation &&
+                //         degreeEducation &&
+                //         start_dateEducation &&
+                //         end_dateEducation
+                //     )
+                //         content.educations.push({
+                //             institution: document.querySelector(
+                //                 `#education-institution-${index}`
+                //             ).value,
+                //             degree: document.querySelector(
+                //                 `#education-degree-${index}`
+                //             ).value,
+                //             start_date: document.querySelector(
+                //                 `#education-start-date-${index}`
+                //             ).value,
+                //             end_date: document.querySelector(
+                //                 `#education-end-date-${index}`
+                //             ).value,
+                //         });
+                // });
 
                 medias.forEach((media, index) => {
                     let nameMedia = form.querySelector(`#media-name-${index}`);
