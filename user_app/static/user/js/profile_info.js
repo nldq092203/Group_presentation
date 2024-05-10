@@ -422,9 +422,9 @@ if (full_member) {
                         <div class="info">
                             <img class="avt" src="${data.avt}" alt="${
                             data.name
-                        } Avatar" style="max-height:100px">
+                        } Avatar">
                         <div class="info-user">
-                        
+
                             <h3><p>${data.name}</p></h3>
                             <div class="id">Student ID: <span>${
                                 data.student_id
