@@ -103,36 +103,36 @@ if (full_member) {
              
             </div>
         `;
-        // Insert the content into the full_member div
-        full_member.innerHTML = content;
-        let btn = "";
-        if (myself) {
-          if (is_member == "True") {
-            btn = `<button class="btn-edit">Modify</button>`;
-          } else {
-            btn = `<button class="btn-join">Join Our Team</button>`;
-          }
-          if (btn != "") edit_info.innerHTML = btn;
-        }
-        console.log(btn);
-        let btnElement =
-          document.querySelector(".btn-edit") ||
-          document.querySelector(".btn-join");
-        if (btnElement && btnElement.className == "btn-edit") {
-          btnElement.addEventListener("click", edit);
-        } else if (btnElement && btnElement.className == "btn-join") {
-          btnElement.addEventListener("click", join);
-        }
-      });
-  } else {
-    let message,
-      join_btn = "";
-    if (is_requested == "True") {
-      message = `<h4>Your request has been sent!</h4>`;
-    } else {
-      message = `<h4>You have not joined our team yet!</h4>`;
-      join_btn = `<button class="btn-join">Join Our Team</button>`;
-    }
+       // Insert the content into the full_member div
+       full_member.innerHTML = content;
+       let btn = "";
+       if (myself) {
+         if (is_member == "True") {
+           btn = `<button class="btn-edit">Modify</button>`;
+         } else {
+           btn = `<button class="btn-join">Join Our Team</button>`;
+         }
+         if (btn != "") edit_info.innerHTML = btn;
+       }
+       console.log(btn);
+       let btnElement =
+         document.querySelector(".btn-edit") ||
+         document.querySelector(".btn-join");
+       if (btnElement && btnElement.className == "btn-edit") {
+         btnElement.addEventListener("click", edit);
+       } else if (btnElement && btnElement.className == "btn-join") {
+         btnElement.addEventListener("click", join);
+       }
+     });
+ } else {
+   let message,
+     join_btn = "";
+   if (is_requested == "True") {
+     message = `<h4>Your request has been sent!</h4>`;
+   } else {
+     message = `<h4>You have not joined our team yet!</h4>`;
+     join_btn = `<button class="btn-join">Join Our Team</button>`;
+   }
     full_member.innerHTML = message;
     edit_info.innerHTML = join_btn;
     join_btn = document.querySelector(".btn-join");
