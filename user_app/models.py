@@ -22,7 +22,7 @@ class Member(User):
     dob = models.DateField()
     avt = models.ImageField(null=True, blank=True, upload_to="images/")
     address = models.CharField(max_length=255)
-    student_id = models.CharField(max_length=255, unique=True)
+    student_id = models.CharField(max_length=255)
     is_member = models.BooleanField(default=False)
     is_requested = models.BooleanField(default=False)
     def __str__(self):

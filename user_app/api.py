@@ -98,6 +98,7 @@ class BaseMemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
         address = data.get("address", member.address)
         avt = data.get("avt", member.avt)
         is_member = data.get("is_member", member.is_member)
+        is_requested = data.get("is_requested", member.is_requested)
         skills_data = data.get("skills", [])
         experiences_data = data.get("experiences", [])
         educations_data = data.get("educations", [])
@@ -117,8 +118,8 @@ class BaseMemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
         member.email = email
         member.student_id = student_id
         member.avt = avt
+        member.is_requested = is_requested
         member.address = address
-        member.is_requested = True
         member.is_member = is_member
 
         member.save()
@@ -157,7 +158,11 @@ class BaseMemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
 
         # Update the Media instances for the given data and set the relationship
         medias = []
-        # medias_data = json.loads(medias_data)
+        if isinstance(medias_data, str):
+            try:
+                medias_data = json.loads(medias_data)
+            except json.JSONDecodeError:
+                pass
         for media_data in medias_data:
             media, created = Media.objects.get_or_create(member=member, **media_data)
             medias.append(media)

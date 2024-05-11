@@ -45,11 +45,16 @@ if (table_div) {
                     const username = delete_btn.dataset.username;
                     delete_btn.addEventListener("click", () => {
                         fetch(`/admin/api/member?username=${username}`, {
-                            method: "DELETE",
+                            method: "PUT",
                             headers: {
                                 "Content-Type": "application/json",
                                 "X-CSRFToken": csrftoken,
                             },
+                            body: JSON.stringify({
+                                username: username,
+                                is_requested: false,
+                                is_member: false,
+                            }),
                         })
                             .then((response) => {
                                 if (!response.ok) {

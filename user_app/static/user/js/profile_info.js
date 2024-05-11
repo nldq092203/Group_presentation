@@ -374,6 +374,7 @@ if (full_member) {
             });
         });
         formData.append("medias", JSON.stringify(mediasArray));
+        console.log(formData.get("medias"));
 
         fetch(`/api/member?username=${username}`, {
           method: "PUT",
@@ -690,6 +691,7 @@ if (full_member) {
             });
         });
         formData.append("medias", JSON.stringify(mediasArray));
+        formData.append('is_requested', true);
         console.log(formData.get("address"));
         console.log(formData.get("medias"));
         fetch("/api/member", {
@@ -698,6 +700,7 @@ if (full_member) {
             "X-CSRFToken": csrftoken,
           },
           body: formData,
+
         })
           .then((response) => response.json())
           .then((data) => {
