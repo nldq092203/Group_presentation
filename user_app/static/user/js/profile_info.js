@@ -119,9 +119,15 @@ if (full_member) {
          document.querySelector(".btn-edit") ||
          document.querySelector(".btn-join");
        if (btnElement && btnElement.className == "btn-edit") {
-         btnElement.addEventListener("click", edit);
+         btnElement.addEventListener("click", function(){
+          edit();
+          this.style.display = 'none';
+        });
        } else if (btnElement && btnElement.className == "btn-join") {
-         btnElement.addEventListener("click", join);
+         btnElement.addEventListener("click", function() {
+          join();
+          this.style.display = 'none';
+       });
        }
      });
  } else {
@@ -237,12 +243,9 @@ if (full_member) {
           <input type="text" name="name" value="${
             memberData.name || ""
           }" required></div>
-          <div class="info-container avta"><label for="avt">Avatar:</label>
-          ${
-            memberData.avt
-              ? `<img src="${memberData.avt}" alt="Avatar">`
-              : '<input type="file" name="avt" accept="image/*">'
-          }</div>
+          <div class="info-container avt"><label for="avt">Avatar:</label>
+            <input type="file" name="avt" accept="image/*">'
+          </div>
           <div class = "info-container"><label for="id">Student ID:</label>
           <input type="text" name="id" value="${
             memberData.student_id || ""
@@ -263,6 +266,7 @@ if (full_member) {
           <input type="submit" value="Save" />
       </form>
       `;
+
     let form = document.querySelector(".info-form-edit");
     if (form) {
       form.addEventListener("submit", (e) => {
@@ -473,6 +477,7 @@ if (full_member) {
     }
   }
   function join() {
+    document.querySelector(".btn-join").style.display = "none";
     // let skillsHTML = "";
     // let experiencesHTML = "";
     // let educationsHTML = "";
@@ -697,7 +702,7 @@ if (full_member) {
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
-            // location.reload();
+            location.reload();
           });
       });
     }

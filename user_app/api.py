@@ -157,7 +157,7 @@ class BaseMemberDetailAPIView(RetrieveUpdateAPIView, CreateAPIView):
 
         # Update the Media instances for the given data and set the relationship
         medias = []
-        medias_data = json.loads(medias_data)
+        # medias_data = json.loads(medias_data)
         for media_data in medias_data:
             media, created = Media.objects.get_or_create(member=member, **media_data)
             medias.append(media)
